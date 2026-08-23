@@ -1,3 +1,6 @@
+import circulo.*;
+import ponto.*;
+import reta.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -15,6 +18,8 @@ class Gui extends JFrame {
     private JLabel msg = new JLabel("Msg: ");
     private JButton jbPonto = new JButton("Ponto");
     private JButton jbReta = new JButton("Reta");
+    private JButton jbCor = new JButton("Cor");
+    private JSpinner jsEspessura = new JSpinner(new SpinnerNumberModel(10, 1, 100, 1));
     private JButton jbLimpar = new JButton("Limpar");
 
     // barra de menu
@@ -36,11 +41,24 @@ class Gui extends JFrame {
         super("Testa Primitivos");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(larg, alt);
-        setVisible(true);
+        // Melhorias na interface
+        barraComandos.setFloatable(false);
+        msg.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        jbPonto.setFocusPainted(false);
+        jbReta.setFocusPainted(false);
+        jbCor.setFocusPainted(false);
+        jbLimpar.setFocusPainted(false);
 
         // Adicionando os componentes
         barraComandos.add(jbPonto);
         barraComandos.add(jbReta);
+        barraComandos.addSeparator();
+        barraComandos.add(new JLabel(" Espessura: "));
+        jsEspessura.setMaximumSize(new Dimension(60, 30));
+        barraComandos.add(jsEspessura);
+        barraComandos.addSeparator();
+        barraComandos.add(jbCor);
+        barraComandos.add(Box.createHorizontalGlue());
         barraComandos.add(jbLimpar);
         add(barraComandos, BorderLayout.NORTH);                
         add(areaDesenho, BorderLayout.CENTER);                
@@ -49,7 +67,16 @@ class Gui extends JFrame {
         Eventos eventos = new Eventos();
         jbPonto.addActionListener(eventos);
         jbReta.addActionListener(eventos);
+        jbCor.addActionListener(eventos);
         jbLimpar.addActionListener(eventos);
+        
+        jsEspessura.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent e) {
+                areaDesenho.setEspessuraAtual((Integer) jsEspessura.getValue());
+            }
+        });
+        
+        setVisible(true);
     }
 
     /**
@@ -75,6 +102,13 @@ class Gui extends JFrame {
                 tipo = TiposPrimitivos.RETA;
                 areaDesenho.setTipo(tipo);
             }
+            if (event.getSource() == jbCor){
+                Color cor = JColorChooser.showDialog(Gui.this, "Escolha a cor", areaDesenho.getCorAtual());
+                if (cor != null) {
+                    areaDesenho.setCorAtual(cor);
+                    jbCor.setForeground(cor); // Optional: give visual feedback of chosen color
+                }
+            }
             if (event.getSource() == jbLimpar){
                 tipo = TiposPrimitivos.NENHUM;
                 areaDesenho.setTipo(tipo);
@@ -93,3 +127,4 @@ class Gui extends JFrame {
         }
     } 
 }
+

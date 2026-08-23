@@ -1,3 +1,5 @@
+package reta;
+import ponto.*;
 public class Reta {
  
     // Atributos da reta
@@ -32,8 +34,8 @@ public class Reta {
     /**
      * Controi uma reta com valores de p1 e p2 (externos)
      *
-     * @param p1 Um parâmetro
-     * @param p2 Um parâmetro
+     * @param p1 Um parÃ¢metro
+     * @param p2 Um parÃ¢metro
      */
     public Reta(Ponto p1, Ponto p2) {
         setP1(p1);
@@ -119,3 +121,4 @@ public class Reta {
     }
    
 }
+

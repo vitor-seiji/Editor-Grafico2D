@@ -1,0 +1,11 @@
+﻿#BlueJ package file
+package.numDependencies=0
+package.numTargets=4
+target1.name=Ponto
+target1.type=ClassTarget
+target2.name=PontoGr
+target2.type=ClassTarget
+target3.name=FiguraPontos
+target3.type=ClassTarget
+target4.name=TestaPonto
+target4.type=ClassTarget

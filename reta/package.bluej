@@ -1,0 +1,11 @@
+﻿#BlueJ package file
+package.numDependencies=0
+package.numTargets=4
+target1.name=Reta
+target1.type=ClassTarget
+target2.name=RetaGr
+target2.type=ClassTarget
+target3.name=FiguraReta
+target3.type=ClassTarget
+target4.name=TestaReta
+target4.type=ClassTarget

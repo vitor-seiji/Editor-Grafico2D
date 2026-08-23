@@ -1,3 +1,4 @@
+package ponto;
  
 
 /**
@@ -19,3 +20,4 @@ public class TestaPonto{
         System.out.println("distancia entre p2 e p3 = " + p2.calcularDistancia(p3));
     }
 }
+

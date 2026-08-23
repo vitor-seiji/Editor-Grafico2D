@@ -1,3 +1,5 @@
+package reta;
+import ponto.*;
 
 /**
  * Write a description of class TestaReta here.

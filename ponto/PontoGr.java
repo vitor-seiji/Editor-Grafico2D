@@ -1,3 +1,4 @@
+package ponto;
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -14,7 +15,7 @@ public class PontoGr extends Ponto {
      * @param x int coordenada x do ponto
      * @param y int coordenada Y do ponto
      */
-    PontoGr(int x, int y){
+    public PontoGr(int x, int y){
         super((double)x, (double)y);
         setCorPto(Color.black);     
         setCorNomePto(Color.black);     
@@ -28,7 +29,7 @@ public class PontoGr extends Ponto {
      * @param y int coordenada Y do ponto
      * @param cor int cor do ponto
      */
-    PontoGr(int x, int y, Color cor){
+    public PontoGr(int x, int y, Color cor){
         super((double)x, (double)y);
         setCorPto(cor);     
         setCorNomePto(Color.black);     
@@ -69,7 +70,7 @@ public class PontoGr extends Ponto {
      * @param cor int cor do ponto
      * @param str String nome do ponto
      */
-    PontoGr(int x, int y, Color cor, String str){
+    public PontoGr(int x, int y, Color cor, String str){
         super((double)x, (double)y);
         setCorPto(cor);     
         setCorNomePto(Color.black);     
@@ -82,7 +83,7 @@ public class PontoGr extends Ponto {
      * @param p2d PontoGr
      * @param cor int cor do ponto
      */
-    PontoGr(PontoGr p2d, Color cor){
+    public PontoGr(PontoGr p2d, Color cor){
         super(p2d);     
         setCorPto(cor);     
         setCorNomePto(Color.black);     
@@ -93,7 +94,7 @@ public class PontoGr extends Ponto {
      * PontoGr Constructor
      *
      */
-    PontoGr(){
+    public PontoGr(){
         super();     
         setCorPto(Color.black);     
         setCorNomePto(Color.black);     
@@ -173,3 +174,5 @@ public class PontoGr extends Ponto {
     }
     
 }
+
+

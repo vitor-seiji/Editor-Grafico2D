@@ -1,3 +1,5 @@
+package reta;
+import ponto.*;
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -16,9 +18,8 @@ public class FiguraReta {
         // Define uma cor visivel (ex: Preta) e espessura 2
         RetaGr r = new RetaGr(x1, y1, x2, y2, Color.BLACK, "", 20);
         
-        // Se sua classe RetaGr usar o algoritmo Midpoint/Bresenham, 
-        // altere para r.desenharRetaMp(g) ou mantenha r.desenharReta(g);
-        r.desenharReta(g); 
+        // Usando o algoritmo Midpoint/Bresenham
+        r.desenharRetaMp(g); 
     }
 
     /**
@@ -26,7 +27,7 @@ public class FiguraReta {
      */
     public static void desenharReta(Graphics g, int x1, int y1, int x2, int y2, Color cor, int esp) {
         RetaGr r = new RetaGr(x1, y1, x2, y2, cor, "", esp);
-        r.desenharReta(g);
+        r.desenharRetaMp(g);
     }
 
     /**

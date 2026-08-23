@@ -1,3 +1,6 @@
+import circulo.*;
+import ponto.*;
+import reta.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
@@ -26,6 +29,8 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     int x1, y1, x2, y2;
     boolean primeiraVez = true;
     int nPto = 1;
+    Color corAtual = Color.BLACK;
+    int espessuraAtual = 10;
 
     /**
      * COnstrutor para objetos da classe PainelDesenho
@@ -33,7 +38,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     public PainelDesenho(JLabel msg, TiposPrimitivos tipo) {
         this.tipo = tipo;
         this.msg = msg;
-        //       this.setBackground(Color.black);
+        this.setBackground(Color.WHITE);
         this.addMouseListener(this); 
         this.addMouseMotionListener(this);
 
@@ -47,6 +52,18 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
         return this.tipo;
     }
 
+    public void setCorAtual(Color cor) {
+        this.corAtual = cor;
+    }
+
+    public Color getCorAtual() {
+        return this.corAtual;
+    }
+
+    public void setEspessuraAtual(int esp) {
+        this.espessuraAtual = esp;
+    }
+
     /**
      * paintComponent - metodo para desenhar
      *
@@ -55,11 +72,11 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     public void paintComponent(Graphics g) {   
         
             if(this.tipo == TiposPrimitivos.PONTO){
-                FiguraPontos.desenharPonto(g, xMouse, yMouse, "", 10);
+                FiguraPontos.desenharPonto(g, xMouse, yMouse, "", espessuraAtual, corAtual);
             }
             if(this.tipo == TiposPrimitivos.RETA){
                 
-                FiguraReta.desenharReta(g, x1, y1, x2, y2);
+                FiguraReta.desenharReta(g, x1, y1, x2, y2, corAtual, espessuraAtual);
         
                 /*
                 int xRC = x1, yR;
@@ -128,7 +145,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     }
 
     /**
-     * mouseMoved evento de movimentação do mouse. Mostra posicao do mouse no painel
+     * mouseMoved evento de movimentaÃ§Ã£o do mouse. Mostra posicao do mouse no painel
      *
      * @param e A parameter
      */
@@ -137,3 +154,4 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
         //System.out.println("("+e.getX() + ", " + e.getY() + ")");
     }
 }
+

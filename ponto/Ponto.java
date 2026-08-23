@@ -1,3 +1,4 @@
+package ponto;
 /**
  * Representacao de ponto matematico
  * 
@@ -77,3 +78,5 @@ public class Ponto {
         return "Ponto [" + getX() + ", " + getY() +  "]";
     }
 }
+
+

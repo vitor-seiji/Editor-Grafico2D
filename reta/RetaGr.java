@@ -1,3 +1,5 @@
+package reta;
+import ponto.*;
  
 import java.awt.Color;
 import java.awt.Graphics;
@@ -218,7 +220,7 @@ public class RetaGr extends Reta{
             }
             // percorre de y1 ate y2. 
             for(y = cIni; y <= cFim; y++){ 
-                // x1 e x2 são iguais
+                // x1 e x2 sÃ£o iguais
                 x = p1.getX(); // ou x = p2.getX()
 
                 // Define ponto grafico
@@ -239,7 +241,7 @@ public class RetaGr extends Reta{
             }
 
             // percorre de x1 ate x2. 
-            // y e´ calculado pela equacao: y = mx + b
+            // y eÂ´ calculado pela equacao: y = mx + b
             for(x = cIni; x <= cFim; x++){ 
                 // Calculo de y pela equacao da reta
                 y = (m*x + b);
@@ -332,5 +334,6 @@ public class RetaGr extends Reta{
     }
 
 }
+
 
 

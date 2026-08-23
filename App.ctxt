@@ -1,6 +1,7 @@
 #BlueJ class context
+#Sun Aug 23 15:15:24 BRT 2026
 comment0.target=App
-comment0.text=\r\n\ Escreva\ a\ descri\u00E7\u00E3o\ da\ classe\ Aplicacao\ aqui.\r\n\ \r\n\ @author\ (seu\ nome)\ \r\n\ @version\ (n\u00FAmero\ de\ vers\u00E3o\ ou\ data)\r\n
+comment0.text=\r\n Escreva a descri\u00C3\u00A7\u00C3\u00A3o da classe Aplicacao aqui.\r\n \r\n @author (seu nome) \r\n @version (n\u00C3\u00BAmero de vers\u00C3\u00A3o ou data)\r\n
 comment1.params=args
-comment1.target=void\ main(java.lang.String[])
+comment1.target=void main(java.lang.String[])
 numComments=2

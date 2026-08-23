@@ -1,3 +1,4 @@
+package ponto;
 import java.awt.*;
 
 /**
@@ -23,6 +24,15 @@ public class FiguraPontos {
             p.desenharPonto(g);
     }
 
+    /**
+     * desenharPonto - desenha ponto com cor especifica
+     */
+    public static void desenharPonto(Graphics g, int x, int y, String nome, int diametro, Color cor){
+            PontoGr p = new PontoGr(x, y, cor, nome, diametro);
+            p.desenharPonto(g);
+    }
+
+
    /**
     * desenharPontosAleatorios - desenha varios pontos em posicoes aleatorias e cores aleatorias
     *
@@ -46,3 +56,4 @@ public class FiguraPontos {
     }
     
 }
+

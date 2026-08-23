@@ -1,0 +1,7 @@
+﻿#BlueJ package file
+package.numDependencies=0
+package.numTargets=2
+target1.name=Circulo
+target1.type=ClassTarget
+target2.name=CirculoGr
+target2.type=ClassTarget

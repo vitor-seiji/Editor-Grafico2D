@@ -1,3 +1,5 @@
+package circulo;
+import ponto.*;
 //Testando o git
 public class Circulo
 {
