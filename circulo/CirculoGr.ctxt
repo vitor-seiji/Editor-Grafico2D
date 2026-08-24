@@ -1,0 +1,17 @@
+#BlueJ class context
+#Mon Aug 24 13:11:01 BRT 2026
+comment0.target=CirculoGr
+comment0.text=\r\n Classe que representa um circulo grafico\r\n @author Ana Paula Barros de Jesus\r\n @author Julie Quaglio da Silva\r\n @author Vitor Seiji Colombo Nishida\r\n
+comment1.params=x1 y1 x2 y2 cor nome esp
+comment1.target=CirculoGr(int, int, int, int, java.awt.Color, java.lang.String, int)
+comment1.text=\r\n Construtor de CirculoGr\r\n
+comment2.params=g
+comment2.target=void desenharCirculo(java.awt.Graphics)
+comment2.text=\r\n Metodo para desenhar o circulo usando o algoritmo de Bresenham (Midpoint)\r\n Isso garante que toda a circunferencia seja feita de pontos (sem falhas na espessura)\r\n @param g Contexto grafico\r\n
+comment3.params=g xc yc x y
+comment3.target=void desenharPontosCirculo(java.awt.Graphics, int, int, int, int)
+comment3.text=\r\n Desenha os 8 pontos simetricos do circulo\r\n
+comment4.params=g x y
+comment4.target=void plotarPonto(java.awt.Graphics, int, int)
+comment4.text=\r\n Instancia e desenha um PontoGr na tela\r\n
+numComments=5

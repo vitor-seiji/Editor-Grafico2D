@@ -1,0 +1,14 @@
+#BlueJ class context
+#Mon Aug 24 13:10:27 BRT 2026
+comment0.target=FiguraPontos
+comment0.text=\r\n Contem metodos para desenhar o ponto.\r\n \r\n @author Julio\r\n @version 20260803\r\n
+comment1.params=g x y nome diametro
+comment1.target=void desenharPonto(java.awt.Graphics, int, int, java.lang.String, int)
+comment1.text=\r\n desenharPonto - desenha ponto na posicao x,y\r\n @author Ana Paula Barros de Jesus\r\n @author Julie Quaglio da Silva\r\n @author Vitor Seiji Colombo Nishida\r\n \r\n @param g Graphics - contem funcoes graficas de biblioteca\r\n @param x int coordenada x do ponto\r\n @param y int coordenada Y do ponto\r\n @param nome String nome do ponto\r\n @param diametro int diametro do ponto\r\n
+comment2.params=g x y nome diametro cor
+comment2.target=void desenharPonto(java.awt.Graphics, int, int, java.lang.String, int, java.awt.Color)
+comment2.text=\r\n desenharPonto - desenha ponto com cor especifica\r\n
+comment3.params=g qtde diametro
+comment3.target=void desenharPontosAleatorios(java.awt.Graphics, int, int)
+comment3.text=\r\n desenharPontosAleatorios - desenha varios pontos em posicoes aleatorias e cores aleatorias\r\n\r\n @param g Graphics - contem funcoes graficas de biblioteca\r\n @param qtde int numero de pontos a serem desenhados\r\n @param diametro dimensao do ponto\r\n
+numComments=4

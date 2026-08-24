@@ -3,10 +3,12 @@ import ponto.*;
 import reta.*;
 
 /**
- * Escreva a descriÃ§Ã£o da classe Aplicacao aqui.
+ * Classe main da aplicação.
  * 
- * @author (seu nome) 
- * @version (nÃºmero de versÃ£o ou data)
+ * @author Ana Paula Barros de Jesus
+ * @author Julie Quaglio da Silva
+ * @author Vitor Seiji Colombo Nishida
+ * @version 
  */
 public class App {
     public static void main(String args[]) {

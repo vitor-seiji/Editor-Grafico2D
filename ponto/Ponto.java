@@ -2,7 +2,9 @@ package ponto;
 /**
  * Representacao de ponto matematico
  * 
- * @author julio
+ * @author Ana Paula Barros de Jesus
+ * @author Julie Quaglio da Silva
+ * @author Vitor Seiji Colombo Nishida
  *
  */
 

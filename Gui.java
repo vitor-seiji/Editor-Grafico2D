@@ -1,26 +1,40 @@
 import circulo.*;
 import ponto.*;
 import reta.*;
+import retangulo.*;
+import triangulo.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 /**
- * TiposPrimitivos - constantes com os tipos de primitivos
+ * Interface Grafica do Editor
  * 
- * @author Julio
- * @version 20260803
+ * @author Ana Paula Barros de Jesus
+ * @author Julie Quaglio da Silva
+ * @author Vitor Seiji Colombo Nishida
  */
 class Gui extends JFrame {
     TiposPrimitivos tipo = TiposPrimitivos.NENHUM;
 
     // mensagens
     private JLabel msg = new JLabel("Msg: ");
+    
+    // Botoes de primitivos
     private JButton jbPonto = new JButton("Ponto");
     private JButton jbReta = new JButton("Reta");
+    private JButton jbCirculo = new JButton("Circulo");
+    private JButton jbRetangulo = new JButton("Retangulo");
+    private JButton jbTriangulo = new JButton("Triangulo");
+    
     private JButton jbCor = new JButton("Cor");
     private JSpinner jsEspessura = new JSpinner(new SpinnerNumberModel(10, 1, 100, 1));
     private JButton jbLimpar = new JButton("Limpar");
+
+    // Combo de filtro
+    private String[] filtros = {"Todos", "Pontos", "Retas", "Circulos", "Retangulos", "Triangulos"};
+    private JComboBox<String> cbFiltro = new JComboBox<>(filtros);
 
     // barra de menu
     private JToolBar barraComandos = new JToolBar();
@@ -35,31 +49,40 @@ class Gui extends JFrame {
      * @param alt int altura da janela
      */
     public Gui(int larg, int alt) {
-        /**
-         * Definicoes de janela
-         */
         super("Testa Primitivos");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(larg, alt);
+        
         // Melhorias na interface
         barraComandos.setFloatable(false);
         msg.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jbPonto.setFocusPainted(false);
         jbReta.setFocusPainted(false);
+        jbCirculo.setFocusPainted(false);
+        jbRetangulo.setFocusPainted(false);
+        jbTriangulo.setFocusPainted(false);
         jbCor.setFocusPainted(false);
         jbLimpar.setFocusPainted(false);
 
         // Adicionando os componentes
         barraComandos.add(jbPonto);
         barraComandos.add(jbReta);
+        barraComandos.add(jbCirculo);
+        barraComandos.add(jbRetangulo);
+        barraComandos.add(jbTriangulo);
         barraComandos.addSeparator();
         barraComandos.add(new JLabel(" Espessura: "));
         jsEspessura.setMaximumSize(new Dimension(60, 30));
         barraComandos.add(jsEspessura);
         barraComandos.addSeparator();
         barraComandos.add(jbCor);
+        barraComandos.addSeparator();
+        barraComandos.add(new JLabel(" Mostrar: "));
+        cbFiltro.setMaximumSize(new Dimension(100, 30));
+        barraComandos.add(cbFiltro);
         barraComandos.add(Box.createHorizontalGlue());
         barraComandos.add(jbLimpar);
+        
         add(barraComandos, BorderLayout.NORTH);                
         add(areaDesenho, BorderLayout.CENTER);                
         add(msg, BorderLayout.SOUTH);
@@ -67,8 +90,18 @@ class Gui extends JFrame {
         Eventos eventos = new Eventos();
         jbPonto.addActionListener(eventos);
         jbReta.addActionListener(eventos);
+        jbCirculo.addActionListener(eventos);
+        jbRetangulo.addActionListener(eventos);
+        jbTriangulo.addActionListener(eventos);
         jbCor.addActionListener(eventos);
         jbLimpar.addActionListener(eventos);
+        
+        cbFiltro.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String selecionado = (String) cbFiltro.getSelectedItem();
+                areaDesenho.setFiltroVisibilidade(selecionado);
+            }
+        });
         
         jsEspessura.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent e) {
@@ -81,50 +114,44 @@ class Gui extends JFrame {
 
     /**
      * Eventos - implementa os eventos da interface ActionListener
-     * 
      */
     private class Eventos implements ActionListener{
-
-        TiposPrimitivos tipo = TiposPrimitivos.RETA;
-
         /**
          * actionPerformed - executa evento do ActionListener
-         *
-         * @param event A parameter
+         * @param event ActionEvent
          */
         public void actionPerformed(ActionEvent event) {            
-
             if (event.getSource() == jbPonto){
-                tipo = TiposPrimitivos.PONTO;
-                areaDesenho.setTipo(tipo);
+                areaDesenho.setTipo(TiposPrimitivos.PONTO);
             }     
-            if (event.getSource() == jbReta){
-                tipo = TiposPrimitivos.RETA;
-                areaDesenho.setTipo(tipo);
+            else if (event.getSource() == jbReta){
+                areaDesenho.setTipo(TiposPrimitivos.RETA);
             }
-            if (event.getSource() == jbCor){
+            else if (event.getSource() == jbCirculo){
+                areaDesenho.setTipo(TiposPrimitivos.CIRCULO);
+            }
+            else if (event.getSource() == jbRetangulo){
+                areaDesenho.setTipo(TiposPrimitivos.RETANGULO);
+            }
+            else if (event.getSource() == jbTriangulo){
+                areaDesenho.setTipo(TiposPrimitivos.TRIANGULO);
+            }
+            else if (event.getSource() == jbCor){
                 Color cor = JColorChooser.showDialog(Gui.this, "Escolha a cor", areaDesenho.getCorAtual());
                 if (cor != null) {
                     areaDesenho.setCorAtual(cor);
-                    jbCor.setForeground(cor); // Optional: give visual feedback of chosen color
+                    jbCor.setForeground(cor);
                 }
             }
-            if (event.getSource() == jbLimpar){
-                tipo = TiposPrimitivos.NENHUM;
-                areaDesenho.setTipo(tipo);
-                areaDesenho.removeAll();
-                repaint(); 
-            }
-            
-            if (tipo == TiposPrimitivos.PONTO) {
-                // Enviando a Forma a ser desenhada e a cor da linha
-                areaDesenho.setTipo( tipo );
-            }
-            
-            if (tipo == TiposPrimitivos.RETA) {
-                areaDesenho.setTipo( tipo );
+            else if (event.getSource() == jbLimpar){
+                areaDesenho.setTipo(TiposPrimitivos.NENHUM);
+                areaDesenho.limparTela();
+                // Retorna o combo de filtro para o inicio ou deixa como esta? 
+                // A funcao limpar ja seta visibilidade Nenhum e repaint.
+                // Mas no combo continua escrito "Todos". Para ficar correto:
+                // cbFiltro.setSelectedItem("Todos"); // Se fizer isso, a tela redesenha "Todos"
+                // Logo, apenas limpamos a tela
             }
         }
     } 
 }
-

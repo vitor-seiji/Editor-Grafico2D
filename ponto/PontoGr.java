@@ -12,6 +12,10 @@ public class PontoGr extends Ponto {
     /**
      * PontoGr Constructor
      *
+     * @author Ana Paula Barros de Jesus
+     * @author Julie Quaglio da Silva
+     * @author Vitor Seiji Colombo Nishida
+     * 
      * @param x int coordenada x do ponto
      * @param y int coordenada Y do ponto
      */

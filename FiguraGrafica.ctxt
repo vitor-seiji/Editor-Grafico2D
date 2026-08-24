@@ -1,0 +1,8 @@
+#BlueJ class context
+#Mon Aug 24 13:09:13 BRT 2026
+comment0.target=FiguraGrafica
+comment0.text=\r\n Interface FiguraGrafica para todos os primitivos desenhaveis.\r\n \r\n @author Ana Paula Barros de Jesus\r\n @author Julie Quaglio da Silva\r\n @author Vitor Seiji Colombo Nishida\r\n
+comment1.params=g
+comment1.target=void desenhar(java.awt.Graphics)
+comment1.text=\r\n Desenha a figura utilizando o contexto grafico fornecido.\r\n @param g Contexto grafico\r\n
+numComments=2

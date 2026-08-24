@@ -10,6 +10,10 @@ import java.awt.*;
 public class FiguraPontos {
     /**
      * desenharPonto - desenha ponto na posicao x,y
+     * @author Ana Paula Barros de Jesus
+     * @author Julie Quaglio da Silva
+     * @author Vitor Seiji Colombo Nishida
+     * 
      * @param g Graphics - contem funcoes graficas de biblioteca
      * @param x int coordenada x do ponto
      * @param y int coordenada Y do ponto

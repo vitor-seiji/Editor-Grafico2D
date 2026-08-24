@@ -7,8 +7,9 @@ import java.awt.Graphics;
 /**
  * Implementacao da classe reta grafica.
  *
- * @author Julio Arakaki
- * @version 1.0 - 24/08/2020
+ * @author Ana Paula Barros de Jesus
+ * @author Julie Quaglio da Silva
+ * @author Vitor Seiji Colombo Nishida
  */
 public class RetaGr extends Reta{
     // Atributos da reta grafica
@@ -220,7 +221,7 @@ public class RetaGr extends Reta{
             }
             // percorre de y1 ate y2. 
             for(y = cIni; y <= cFim; y++){ 
-                // x1 e x2 sÃ£o iguais
+                // x1 e x2 sÃƒÂ£o iguais
                 x = p1.getX(); // ou x = p2.getX()
 
                 // Define ponto grafico
@@ -241,7 +242,7 @@ public class RetaGr extends Reta{
             }
 
             // percorre de x1 ate x2. 
-            // y eÂ´ calculado pela equacao: y = mx + b
+            // y eÃ‚Â´ calculado pela equacao: y = mx + b
             for(x = cIni; x <= cFim; x++){ 
                 // Calculo de y pela equacao da reta
                 y = (m*x + b);
@@ -259,7 +260,7 @@ public class RetaGr extends Reta{
      * Desenha reta utilizando o algoritmo de MidPoint (Bresenham)
      * @param g
      */
-    void desenharRetaMp(Graphics g){
+    public void desenharRetaMp(Graphics g){
 
         int x1 = (int)getP1().getX(), x2 = (int)getP2().getX();
         int y1 = (int)getP1().getY(), y2 = (int)getP2().getY();

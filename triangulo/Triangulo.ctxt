@@ -1,0 +1,11 @@
+#BlueJ class context
+#Mon Aug 24 13:13:02 BRT 2026
+comment0.target=Triangulo
+comment0.text=\r\n Classe que representa um Triangulo\r\n\r\n @author Ana Paula Barros de Jesus\r\n @author Julie Quaglio da Silva\r\n @author Vitor Seiji Colombo Nishida\r\n
+comment1.params=x1 y1 x2 y2 x3 y3
+comment1.target=Triangulo(double, double, double, double, double, double)
+comment1.text=\r\n Construtor\r\n
+comment2.target=ponto.Ponto getP1()
+comment3.target=ponto.Ponto getP2()
+comment4.target=ponto.Ponto getP3()
+numComments=5

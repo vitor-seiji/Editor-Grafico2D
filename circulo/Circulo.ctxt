@@ -1,0 +1,13 @@
+#BlueJ class context
+#Mon Aug 24 13:11:01 BRT 2026
+comment0.target=Circulo
+comment1.params=x y raio
+comment1.target=Circulo(double, double, int)
+comment1.text=\r\n Construtor para objetos da classe Circulo\r\n
+comment2.target=ponto.Ponto getCentro()
+comment3.target=int getRaio()
+comment4.params=centro
+comment4.target=void setCentro(ponto.Ponto)
+comment5.params=raio
+comment5.target=void setRaio(int)
+numComments=6

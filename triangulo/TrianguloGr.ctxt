@@ -1,0 +1,11 @@
+#BlueJ class context
+#Mon Aug 24 13:13:02 BRT 2026
+comment0.target=TrianguloGr
+comment0.text=\r\n Classe que representa um Triangulo grafico\r\n \r\n @author Ana Paula Barros de Jesus\r\n @author Julie Quaglio da Silva\r\n @author Vitor Seiji Colombo Nishida\r\n
+comment1.params=x1 y1 x2 y2 x3 y3 cor espessura
+comment1.target=TrianguloGr(int, int, int, int, int, int, java.awt.Color, int)
+comment1.text=\r\n Construtor\r\n
+comment2.params=g
+comment2.target=void desenharTriangulo(java.awt.Graphics)
+comment2.text=\r\n Desenha o triangulo\r\n
+numComments=3

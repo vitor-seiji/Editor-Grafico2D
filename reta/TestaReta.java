@@ -4,8 +4,9 @@ import ponto.*;
 /**
  * Write a description of class TestaReta here.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Ana Paula Barros de Jesus
+ * @author Julie Quaglio da Silva
+ * @author Vitor Seiji Colombo Nishida
  */
 public class TestaReta
 {

@@ -1,0 +1,14 @@
+#BlueJ class context
+#Mon Aug 24 13:11:56 BRT 2026
+comment0.target=FiguraReta
+comment0.text=\r\n Desenha figuras com retas.\r\n \r\n @author Ana Paula Barros de Jesus\r\n @author Julie Quaglio da Silva\r\n @author Vitor Seiji Colombo Nishida\r\n
+comment1.params=g x1 y1 x2 y2
+comment1.target=void desenharReta(java.awt.Graphics, int, int, int, int)
+comment1.text=\r\n Desenha uma reta simples definindo a cor e espessura padrao\r\n
+comment2.params=g x1 y1 x2 y2 cor esp
+comment2.target=void desenharReta(java.awt.Graphics, int, int, int, int, java.awt.Color, int)
+comment2.text=\r\n Sobrecarga do metodo para permitir escolher a cor e espessura\r\n
+comment3.params=g qtde esp
+comment3.target=void desenharRetas(java.awt.Graphics, int, int)
+comment3.text=\r\n Desenha varias retas na area de desenho\r\n
+numComments=4
