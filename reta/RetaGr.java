@@ -17,6 +17,7 @@ public class RetaGr extends Reta{
     String nomeReta = ""; // nome da reta
     Color corNomeReta  = Color.BLACK;
     int espReta = 1; // espessura da reta
+    String TipoReta;
 
     // Construtores
     /**
@@ -130,7 +131,14 @@ public class RetaGr extends Reta{
     public void setCorReta(Color cor) {
         this.corReta = cor;
     }
-
+    
+    public void setTipoRetaGr(String tipo) {
+        this.TipoReta = tipo;
+    }
+    
+    public String getTipoRetaGr(){
+        return this.TipoReta;
+    }
     /**
      * Altera o nome da reta.
      *

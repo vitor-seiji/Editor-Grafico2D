@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+//import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Painel para desenhar primitivos graficos
@@ -27,12 +28,14 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     private static final long serialVersionUID = 1L;
     JLabel msg;
     TiposPrimitivos tipo;
-    
+    String tipoReta;
+    String LimparTipo;
     // Lista para armazenar as formas graficas (Estrutura de Dados - ED)
     private List<Object> formas = new ArrayList<>();
     
     // Filtro de exibicao ("Todos", "Pontos", "Retas", "Circulos", "Retangulos", "Triangulos", "Nenhum")
     private String filtroVisibilidade = "Todos";
+    private String naoVisibilidade = "Todos";
 
     int xMouse, yMouse;
     int x1, y1, x2, y2, x3, y3;
@@ -57,6 +60,14 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     public void setTipo(TiposPrimitivos tipo){
         this.tipo = tipo;
         this.estadoClique = 0; // reseta o estado de cliques ao trocar de tipo
+    }
+    
+    public void setTipoReta(String tipo){
+        this.tipoReta = tipo;
+    }
+    
+    public void setLimparTipo(String tipo){
+        this.LimparTipo = tipo;
     }
 
     public TiposPrimitivos getTipo(){
@@ -87,7 +98,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     /**
      * Limpa apenas a tela (nao remove da ED)
      */
-    public void limparTela() {
+    public void limparTela(){
         this.filtroVisibilidade = "Nenhum";
         repaint();
     }
@@ -100,7 +111,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     public void paintComponent(Graphics g) {   
         super.paintComponent(g); // Limpa o fundo
         
-        if (filtroVisibilidade.equals("Nenhum")) {
+        if (filtroVisibilidade.equals("Nenhum")){
             return; // Nao desenha nada, apenas limpou a tela
         }
         
@@ -114,7 +125,15 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
             }
             else if (forma instanceof RetaGr && (filtroVisibilidade.equals("Todos") || filtroVisibilidade.equals("Retas"))) {
                 RetaGr r = (RetaGr) forma;
-                r.desenharRetaMp(g);
+                if(r.getTipoRetaGr().equals("Pontos")){
+                    r.desenharReta(g);
+                }
+                if(r.getTipoRetaGr().equals("MidPoint")){
+                    r.desenharRetaMp(g);
+                }
+                if(r.getTipoRetaGr().equals("Library")){
+                    r.desenharRetaLib(g);
+                }
             }
             else if (forma instanceof CirculoGr && (filtroVisibilidade.equals("Todos") || filtroVisibilidade.equals("Circulos"))) {
                 CirculoGr c = (CirculoGr) forma;
@@ -157,8 +176,19 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
                 
                 if (tipo == TiposPrimitivos.RETA) {
                     RetaGr r = new RetaGr(x1, y1, x2, y2, corAtual, espessuraAtual);
+                    if(tipoReta.equals("Pontos")){
+                        r.desenharReta(g);
+                        r.setTipoRetaGr(tipoReta);
+                    }
+                    if(tipoReta.equals("MidPoint")){
+                        r.desenharRetaMp(g);
+                        r.setTipoRetaGr(tipoReta);
+                    }
+                     if(tipoReta.equals("Library")){
+                        r.desenharRetaLib(g);
+                        r.setTipoRetaGr(tipoReta);
+                    }
                     formas.add(r);
-                    r.desenharRetaLib(g);
                 } else if (tipo == TiposPrimitivos.CIRCULO) {
                     CirculoGr c = new CirculoGr(x1, y1, x2, y2, corAtual, "", espessuraAtual);
                     formas.add(c);

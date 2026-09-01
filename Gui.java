@@ -23,6 +23,7 @@ class Gui extends JFrame {
     
     // Botoes de primitivos
     private JButton jbPonto = new JButton("Ponto");
+    private String[] tipoRetas = {"Pontos", "MidPoint", "Library"};
     private JButton jbReta = new JButton("Reta");
     private JButton jbCirculo = new JButton("Circulo");
     private JButton jbRetangulo = new JButton("Retangulo");
@@ -35,6 +36,8 @@ class Gui extends JFrame {
     // Combo de filtro
     private String[] filtros = {"Todos", "Pontos", "Retas", "Circulos", "Retangulos", "Triangulos"};
     private JComboBox<String> cbFiltro = new JComboBox<>(filtros);
+    private JComboBox<String> cbReta = new JComboBox<>(tipoRetas);
+    private JComboBox<String> cbLimparTipo = new JComboBox<>(filtros);
 
     // barra de menu
     private JToolBar barraComandos = new JToolBar();
@@ -67,6 +70,7 @@ class Gui extends JFrame {
         // Adicionando os componentes
         barraComandos.add(jbPonto);
         barraComandos.add(jbReta);
+        //barraComandos.add(cbReta);
         barraComandos.add(jbCirculo);
         barraComandos.add(jbRetangulo);
         barraComandos.add(jbTriangulo);
@@ -120,12 +124,19 @@ class Gui extends JFrame {
          * actionPerformed - executa evento do ActionListener
          * @param event ActionEvent
          */
-        public void actionPerformed(ActionEvent event) {            
+        public void actionPerformed(ActionEvent event) {    
+            if(event.getSource() != jbReta){
+                barraComandos.remove(cbReta);
+            }
             if (event.getSource() == jbPonto){
                 areaDesenho.setTipo(TiposPrimitivos.PONTO);
             }     
             else if (event.getSource() == jbReta){
+                cbReta.setMaximumSize(new Dimension(100, 30));
+                barraComandos.add(cbReta);
+                String tipoReta = (String) cbReta.getSelectedItem();
                 areaDesenho.setTipo(TiposPrimitivos.RETA);
+                areaDesenho.setTipoReta(tipoReta);
             }
             else if (event.getSource() == jbCirculo){
                 areaDesenho.setTipo(TiposPrimitivos.CIRCULO);
@@ -144,13 +155,12 @@ class Gui extends JFrame {
                 }
             }
             else if (event.getSource() == jbLimpar){
+                cbLimparTipo.setMaximumSize(new Dimension(100, 30));
+                barraComandos.add(cbLimparTipo);
+                String limparTipo = (String) cbLimparTipo.getSelectedItem();
                 areaDesenho.setTipo(TiposPrimitivos.NENHUM);
+                areaDesenho.setLimparTipo(limparTipo);
                 areaDesenho.limparTela();
-                // Retorna o combo de filtro para o inicio ou deixa como esta? 
-                // A funcao limpar ja seta visibilidade Nenhum e repaint.
-                // Mas no combo continua escrito "Todos". Para ficar correto:
-                // cbFiltro.setSelectedItem("Todos"); // Se fizer isso, a tela redesenha "Todos"
-                // Logo, apenas limpamos a tela
             }
         }
     } 
