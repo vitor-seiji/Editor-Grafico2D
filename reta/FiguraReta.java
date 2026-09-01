@@ -20,7 +20,7 @@ public class FiguraReta {
         RetaGr r = new RetaGr(x1, y1, x2, y2, Color.BLACK, "", 20);
         
         // Usando o algoritmo Midpoint/Bresenham
-        r.desenharRetaMp(g); 
+        r.desenharRetaLib(g); 
     }
 
     /**
@@ -28,7 +28,7 @@ public class FiguraReta {
      */
     public static void desenharReta(Graphics g, int x1, int y1, int x2, int y2, Color cor, int esp) {
         RetaGr r = new RetaGr(x1, y1, x2, y2, cor, "", esp);
-        r.desenharRetaMp(g);
+        r.desenharRetaLib(g);
     }
 
     /**

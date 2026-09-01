@@ -333,7 +333,12 @@ public class RetaGr extends Reta{
             }
         }
     }
-
+    
+    public void desenharRetaLib(Graphics g){
+        int x1 = (int)getP1().getX(), x2 = (int)getP2().getX();
+        int y1 = (int)getP1().getY(), y2 = (int)getP2().getY();
+        g.drawLine(x1, y1, x2, y2);
+    }
 }
 
 

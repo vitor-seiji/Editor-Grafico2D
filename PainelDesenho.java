@@ -158,7 +158,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
                 if (tipo == TiposPrimitivos.RETA) {
                     RetaGr r = new RetaGr(x1, y1, x2, y2, corAtual, espessuraAtual);
                     formas.add(r);
-                    r.desenharRetaMp(g);
+                    r.desenharRetaLib(g);
                 } else if (tipo == TiposPrimitivos.CIRCULO) {
                     CirculoGr c = new CirculoGr(x1, y1, x2, y2, corAtual, "", espessuraAtual);
                     formas.add(c);
