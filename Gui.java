@@ -86,6 +86,8 @@ class Gui extends JFrame {
         barraComandos.add(cbFiltro);
         barraComandos.add(Box.createHorizontalGlue());
         barraComandos.add(jbLimpar);
+        cbLimparTipo.setMaximumSize(new Dimension(100, 30));
+        barraComandos.add(cbLimparTipo);
         
         add(barraComandos, BorderLayout.NORTH);                
         add(areaDesenho, BorderLayout.CENTER);                
@@ -156,11 +158,17 @@ class Gui extends JFrame {
             }
             else if (event.getSource() == jbLimpar){
                 cbLimparTipo.setMaximumSize(new Dimension(100, 30));
-                barraComandos.add(cbLimparTipo);
-                String limparTipo = (String) cbLimparTipo.getSelectedItem();
+                //barraComandos.add(cbLimparTipo);
+                String limparTipo = "Todos";
+                limparTipo = (String) cbLimparTipo.getSelectedItem();
                 areaDesenho.setTipo(TiposPrimitivos.NENHUM);
-                areaDesenho.setLimparTipo(limparTipo);
-                areaDesenho.limparTela();
+                if(limparTipo.equals("Todos")){
+                    areaDesenho.limparTela();
+                }
+                else{
+                    areaDesenho.setFiltroNaoVisibilidade(limparTipo);
+                    areaDesenho.repaint();
+                }
             }
         }
     } 

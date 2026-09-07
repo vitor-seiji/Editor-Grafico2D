@@ -29,7 +29,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     JLabel msg;
     TiposPrimitivos tipo;
     String tipoReta;
-    String LimparTipo;
+    
     // Lista para armazenar as formas graficas (Estrutura de Dados - ED)
     private List<Object> formas = new ArrayList<>();
     
@@ -66,9 +66,6 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
         this.tipoReta = tipo;
     }
     
-    public void setLimparTipo(String tipo){
-        this.LimparTipo = tipo;
-    }
 
     public TiposPrimitivos getTipo(){
         return this.tipo;
@@ -92,6 +89,11 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
      */
     public void setFiltroVisibilidade(String filtro) {
         this.filtroVisibilidade = filtro;
+        repaint();
+    }
+    
+    public void setFiltroNaoVisibilidade(String filtro) {
+        this.naoVisibilidade = filtro;
         repaint();
     }
     
@@ -119,11 +121,11 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
         
         // Percorre a ED e desenha conforme o filtro
         for (Object forma : formas) {
-            if (forma instanceof PontoGr && (filtroVisibilidade.equals("Todos") || filtroVisibilidade.equals("Pontos"))) {
+            if (forma instanceof PontoGr && (filtroVisibilidade.equals("Todos") || filtroVisibilidade.equals("Pontos")) && !naoVisibilidade.equals("Pontos")) {
                 PontoGr p = (PontoGr) forma;
                 p.desenharPonto(g);
             }
-            else if (forma instanceof RetaGr && (filtroVisibilidade.equals("Todos") || filtroVisibilidade.equals("Retas"))) {
+            else if (forma instanceof RetaGr && (filtroVisibilidade.equals("Todos") || filtroVisibilidade.equals("Retas")) && !naoVisibilidade.equals("Retas")) {
                 RetaGr r = (RetaGr) forma;
                 if(r.getTipoRetaGr().equals("Pontos")){
                     r.desenharReta(g);
@@ -135,15 +137,15 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
                     r.desenharRetaLib(g);
                 }
             }
-            else if (forma instanceof CirculoGr && (filtroVisibilidade.equals("Todos") || filtroVisibilidade.equals("Circulos"))) {
+            else if (forma instanceof CirculoGr && (filtroVisibilidade.equals("Todos") || filtroVisibilidade.equals("Circulos")) && !naoVisibilidade.equals("Circulos")) {
                 CirculoGr c = (CirculoGr) forma;
                 c.desenharCirculo(g);
             }
-            else if (forma instanceof RetanguloGr && (filtroVisibilidade.equals("Todos") || filtroVisibilidade.equals("Retangulos"))) {
+            else if (forma instanceof RetanguloGr && (filtroVisibilidade.equals("Todos") || filtroVisibilidade.equals("Retangulos")) && !naoVisibilidade.equals("Retangulos")) {
                 RetanguloGr ret = (RetanguloGr) forma;
                 ret.desenharRetangulo(g);
             }
-            else if (forma instanceof TrianguloGr && (filtroVisibilidade.equals("Todos") || filtroVisibilidade.equals("Triangulos"))) {
+            else if (forma instanceof TrianguloGr && (filtroVisibilidade.equals("Todos") || filtroVisibilidade.equals("Triangulos")) && !naoVisibilidade.equals("Triangulos")) {
                 TrianguloGr tri = (TrianguloGr) forma;
                 tri.desenharTriangulo(g);
             }
