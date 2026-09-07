@@ -1,5 +1,5 @@
 #BlueJ class context
-#Mon Sep 07 14:02:35 BRT 2026
+#Mon Sep 07 20:21:34 BRT 2026
 comment0.target=Gui
 comment0.text=\r\n Interface Grafica do Editor\r\n \r\n @author Ana Paula Barros de Jesus\r\n @author Julie Quaglio da Silva\r\n @author Vitor Seiji Colombo Nishida\r\n
 comment1.params=larg alt
@@ -9,4 +9,8 @@ comment2.params=e
 comment2.target=void actionPerformed(java.awt.event.ActionEvent)
 comment3.params=e
 comment3.target=void stateChanged(javax.swing.event.ChangeEvent)
-numComments=4
+comment4.target=void salvarFigura()
+comment5.params=c
+comment5.target=java.lang.String formatarCor(java.awt.Color)
+comment6.target=java.lang.String gerarJson()
+numComments=7

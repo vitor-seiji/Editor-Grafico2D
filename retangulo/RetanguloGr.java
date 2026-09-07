@@ -42,4 +42,7 @@ public class RetanguloGr extends Retangulo {
         r3.desenharRetaMp(g);
         r4.desenharRetaMp(g);
     }
+    
+    public Color getCorRetangulo() { return corRetangulo; }
+    public int getEspessura() { return espessura; }
 }

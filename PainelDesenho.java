@@ -35,7 +35,6 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     
     // Filtro de exibicao ("Todos", "Pontos", "Retas", "Circulos", "Retangulos", "Triangulos", "Nenhum")
     private String filtroVisibilidade = "Todos";
-    private String naoVisibilidade = "Todos";
 
     int xMouse, yMouse;
     int x1, y1, x2, y2, x3, y3;
@@ -93,15 +92,27 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     }
     
     public void setFiltroNaoVisibilidade(String filtro) {
-        this.naoVisibilidade = filtro;
+        if (filtro.equals("Todos")) {
+            formas.clear();
+        } else if (filtro.equals("Pontos")) {
+            formas.removeIf(f -> f instanceof PontoGr);
+        } else if (filtro.equals("Retas")) {
+            formas.removeIf(f -> f instanceof RetaGr);
+        } else if (filtro.equals("Circulos")) {
+            formas.removeIf(f -> f instanceof CirculoGr);
+        } else if (filtro.equals("Retangulos")) {
+            formas.removeIf(f -> f instanceof RetanguloGr);
+        } else if (filtro.equals("Triangulos")) {
+            formas.removeIf(f -> f instanceof TrianguloGr);
+        }
         repaint();
     }
     
     /**
-     * Limpa apenas a tela (nao remove da ED)
+     * Limpa a tela e a ED
      */
     public void limparTela(){
-        this.filtroVisibilidade = "Nenhum";
+        formas.clear();
         repaint();
     }
 
@@ -121,35 +132,64 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
         
         // Percorre a ED e desenha conforme o filtro
         for (Object forma : formas) {
-            if (forma instanceof PontoGr && (filtroVisibilidade.equals("Todos") || filtroVisibilidade.equals("Pontos")) && !naoVisibilidade.equals("Pontos")) {
+            if (forma instanceof PontoGr && (filtroVisibilidade.equals("Todos") || filtroVisibilidade.equals("Pontos"))) {
                 PontoGr p = (PontoGr) forma;
                 p.desenharPonto(g);
             }
-            else if (forma instanceof RetaGr && (filtroVisibilidade.equals("Todos") || filtroVisibilidade.equals("Retas")) && !naoVisibilidade.equals("Retas")) {
+            else if (forma instanceof RetaGr && (filtroVisibilidade.equals("Todos") || filtroVisibilidade.equals("Retas"))) {
                 RetaGr r = (RetaGr) forma;
-                if(r.getTipoRetaGr().equals("Pontos")){
+                if(r.getTipoRetaGr() != null && r.getTipoRetaGr().equals("Pontos")){
                     r.desenharReta(g);
                 }
-                if(r.getTipoRetaGr().equals("MidPoint")){
+                else if(r.getTipoRetaGr() != null && r.getTipoRetaGr().equals("MidPoint")){
                     r.desenharRetaMp(g);
                 }
-                if(r.getTipoRetaGr().equals("Library")){
+                else {
                     r.desenharRetaLib(g);
                 }
             }
-            else if (forma instanceof CirculoGr && (filtroVisibilidade.equals("Todos") || filtroVisibilidade.equals("Circulos")) && !naoVisibilidade.equals("Circulos")) {
+            else if (forma instanceof CirculoGr && (filtroVisibilidade.equals("Todos") || filtroVisibilidade.equals("Circulos"))) {
                 CirculoGr c = (CirculoGr) forma;
                 c.desenharCirculo(g);
             }
-            else if (forma instanceof RetanguloGr && (filtroVisibilidade.equals("Todos") || filtroVisibilidade.equals("Retangulos")) && !naoVisibilidade.equals("Retangulos")) {
+            else if (forma instanceof RetanguloGr && (filtroVisibilidade.equals("Todos") || filtroVisibilidade.equals("Retangulos"))) {
                 RetanguloGr ret = (RetanguloGr) forma;
                 ret.desenharRetangulo(g);
             }
-            else if (forma instanceof TrianguloGr && (filtroVisibilidade.equals("Todos") || filtroVisibilidade.equals("Triangulos")) && !naoVisibilidade.equals("Triangulos")) {
+            else if (forma instanceof TrianguloGr && (filtroVisibilidade.equals("Todos") || filtroVisibilidade.equals("Triangulos"))) {
                 TrianguloGr tri = (TrianguloGr) forma;
                 tri.desenharTriangulo(g);
             }
         }
+        
+        // Desenho dos elásticos
+        if (estadoClique == 1) {
+            if (tipo == TiposPrimitivos.RETA) {
+                RetaGr r = new RetaGr(x1, y1, tempX, tempY, corAtual, espessuraAtual);
+                if(tipoReta != null && tipoReta.equals("Pontos")){
+                    r.desenharReta(g);
+                } else if(tipoReta != null && tipoReta.equals("MidPoint")){
+                    r.desenharRetaMp(g);
+                } else {
+                    r.desenharRetaLib(g);
+                }
+            } else if (tipo == TiposPrimitivos.CIRCULO) {
+                CirculoGr c = new CirculoGr(x1, y1, tempX, tempY, corAtual, "", espessuraAtual);
+                c.desenharCirculo(g);
+            } else if (tipo == TiposPrimitivos.RETANGULO) {
+                RetanguloGr ret = new RetanguloGr(x1, y1, tempX, tempY, corAtual, espessuraAtual);
+                ret.desenharRetangulo(g);
+            }
+        } else if (estadoClique == 2 && tipo == TiposPrimitivos.TRIANGULO) {
+            TrianguloGr tri = new TrianguloGr(x1, y1, x2, y2, tempX, tempY, corAtual, espessuraAtual);
+            tri.desenharTriangulo(g);
+        } else if (estadoClique == 1 && tipo == TiposPrimitivos.TRIANGULO) {
+            RetaGr r = new RetaGr(x1, y1, tempX, tempY, corAtual, espessuraAtual);
+            r.desenharRetaLib(g);
+        }
+        
+        //naoVisibilidade = "Todos";
+        
     }
 
     /**
@@ -164,7 +204,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
             yMouse = e.getY();
             PontoGr p = new PontoGr(xMouse, yMouse, corAtual, "", espessuraAtual);
             formas.add(p);
-            p.desenharPonto(g); // Desenha direto na tela sem chamar repaint()
+            repaint();
         }
         else if(tipo == TiposPrimitivos.RETA || tipo == TiposPrimitivos.CIRCULO || tipo == TiposPrimitivos.RETANGULO){
             if(estadoClique == 0){
@@ -178,28 +218,20 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
                 
                 if (tipo == TiposPrimitivos.RETA) {
                     RetaGr r = new RetaGr(x1, y1, x2, y2, corAtual, espessuraAtual);
-                    if(tipoReta.equals("Pontos")){
-                        r.desenharReta(g);
+                    if(tipoReta != null) {
                         r.setTipoRetaGr(tipoReta);
-                    }
-                    if(tipoReta.equals("MidPoint")){
-                        r.desenharRetaMp(g);
-                        r.setTipoRetaGr(tipoReta);
-                    }
-                     if(tipoReta.equals("Library")){
-                        r.desenharRetaLib(g);
-                        r.setTipoRetaGr(tipoReta);
+                    } else {
+                        r.setTipoRetaGr("Library");
                     }
                     formas.add(r);
                 } else if (tipo == TiposPrimitivos.CIRCULO) {
                     CirculoGr c = new CirculoGr(x1, y1, x2, y2, corAtual, "", espessuraAtual);
                     formas.add(c);
-                    c.desenharCirculo(g);
                 } else if (tipo == TiposPrimitivos.RETANGULO) {
                     RetanguloGr ret = new RetanguloGr(x1, y1, x2, y2, corAtual, espessuraAtual);
                     formas.add(ret);
-                    ret.desenharRetangulo(g);
                 }
+                repaint();
             }
         }
         else if(tipo == TiposPrimitivos.TRIANGULO) {
@@ -217,7 +249,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
                 estadoClique = 0;
                 TrianguloGr tri = new TrianguloGr(x1, y1, x2, y2, x3, y3, corAtual, espessuraAtual);
                 formas.add(tri);
-                tri.desenharTriangulo(g);
+                repaint();
             }
         }
     }     
@@ -226,7 +258,11 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     public void mouseClicked(MouseEvent e) { }
     public void mouseEntered(MouseEvent e) { }
     public void mouseExited(MouseEvent e) { }
-    public void mouseDragged(MouseEvent e) { }
+    public void mouseDragged(MouseEvent e) { 
+        mouseMoved(e);
+    }
+
+    int tempX, tempY;
 
     /**
      * Mostra posicao do mouse no painel
@@ -234,5 +270,14 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
      */
     public void mouseMoved(MouseEvent e) {
         this.msg.setText("(" + e.getX() + ", " + e.getY() + ")");
+        if (estadoClique > 0) {
+            tempX = e.getX();
+            tempY = e.getY();
+            repaint();
+        }
+    }
+    
+    public List<Object> getFormas() {
+        return formas;
     }
 }

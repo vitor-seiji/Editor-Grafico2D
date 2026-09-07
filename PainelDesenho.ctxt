@@ -1,12 +1,12 @@
 #BlueJ class context
-#Mon Sep 07 14:02:26 BRT 2026
+#Mon Sep 07 20:21:34 BRT 2026
 comment0.target=PainelDesenho
 comment0.text=\r\n Painel para desenhar primitivos graficos\r\n \r\n @author Ana Paula Barros de Jesus \r\n @author Julie Quaglio da Silva\r\n @author Vitor Seiji Colombo Nishida\r\n\r\n
 comment1.params=msg tipo
 comment1.target=PainelDesenho(javax.swing.JLabel, TiposPrimitivos)
 comment1.text=\r\n Construtor para objetos da classe PainelDesenho\r\n
 comment10.target=void limparTela()
-comment10.text=\r\n Limpa apenas a tela (nao remove da ED)\r\n
+comment10.text=\r\n Limpa a tela e a ED\r\n
 comment11.params=g
 comment11.target=void paintComponent(java.awt.Graphics)
 comment11.text=\r\n paintComponent - metodo para desenhar\r\n @param g Contexto grafico\r\n
@@ -26,6 +26,7 @@ comment17.target=void mouseDragged(java.awt.event.MouseEvent)
 comment18.params=e
 comment18.target=void mouseMoved(java.awt.event.MouseEvent)
 comment18.text=\r\n Mostra posicao do mouse no painel\r\n @param e MouseEvent\r\n
+comment19.target=java.util.List getFormas()
 comment2.params=tipo
 comment2.target=void setTipo(TiposPrimitivos)
 comment3.params=tipo
@@ -41,4 +42,4 @@ comment8.target=void setFiltroVisibilidade(java.lang.String)
 comment8.text=\r\n Define o filtro de visibilidade para o redesenho\r\n @param filtro Filtro de primitivos\r\n
 comment9.params=filtro
 comment9.target=void setFiltroNaoVisibilidade(java.lang.String)
-numComments=19
+numComments=20

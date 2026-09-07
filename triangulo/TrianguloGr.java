@@ -36,4 +36,7 @@ public class TrianguloGr extends Triangulo {
         r2.desenharRetaMp(g);
         r3.desenharRetaMp(g);
     }
+    
+    public Color getCorTriangulo() { return corTriangulo; }
+    public int getEspessura() { return espessura; }
 }

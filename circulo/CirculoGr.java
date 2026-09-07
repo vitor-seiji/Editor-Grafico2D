@@ -75,4 +75,7 @@ public class CirculoGr extends Circulo
         PontoGr p = new PontoGr(x, y, corCirculo, espReta);
         p.desenharPonto(g);
     }
+    
+    public Color getCorCirculo() { return corCirculo; }
+    public int getEspReta() { return espReta; }
 }
