@@ -1,4 +1,5 @@
 #BlueJ class context
+#Mon Sep 14 18:06:44 BRT 2026
 comment0.target=TiposPrimitivos
-comment0.text=\r\n\ TiposPrimitivos\ -\ constantes\ com\ os\ tipos\ de\ primitivos\r\n\ \r\n\ @author\ Ana\ Paula\ Barros\ de\ Jesus\r\n\ @author\ Julie\ Quaglio\ da\ Silva\r\n\ @author\ Vitor\ Seiji\ Colombo\ Nishida\r\n
+comment0.text=\r\n Enumera\u00E7\u00E3o que define os tipos de primitivos geom\u00E9tricos suportados pelo editor gr\u00E1fico.\r\n Permite identificar qual forma geom\u00E9trica est\u00E1 ativa para desenho ou filtragem.\r\n \r\n @author Ana Paula Barros de Jesus\r\n @author Julie Quaglio da Silva\r\n @author Vitor Seiji Colombo Nishida\r\n @version 1.0\r\n
 numComments=1

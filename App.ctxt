@@ -1,7 +1,8 @@
 #BlueJ class context
-#Mon Sep 07 20:21:34 BRT 2026
+#Mon Sep 14 18:07:45 BRT 2026
 comment0.target=App
-comment0.text=\r\n Classe main da aplica\u00E7\u00E3o.\r\n \r\n @author Ana Paula Barros de Jesus\r\n @author Julie Quaglio da Silva\r\n @author Vitor Seiji Colombo Nishida\r\n @version \r\n
+comment0.text=\r\n Classe principal da aplica\u00E7\u00E3o do Editor Gr\u00E1fico.\r\n Inicializa a interface gr\u00E1fica definindo o Look and Feel do sistema\r\n e instanciando a janela principal com as dimens\u00F5es especificadas.\r\n \r\n @author Ana Paula Barros de Jesus\r\n @author Julie Quaglio da Silva\r\n @author Vitor Seiji Colombo Nishida\r\n
 comment1.params=args
 comment1.target=void main(java.lang.String[])
+comment1.text=\r\n Ponto de entrada principal da aplica\u00E7\u00E3o.\r\n Configura o Look and Feel para o padr\u00E3o do sistema operacional\r\n e instancia a janela principal (Gui) com resolu\u00E7\u00E3o de 1000x900 pixels.\r\n \r\n @param args Argumentos da linha de comando (n\u00E3o utilizados).\r\n
 numComments=2

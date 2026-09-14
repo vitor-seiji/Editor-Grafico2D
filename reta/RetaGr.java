@@ -6,30 +6,50 @@ import java.awt.Graphics;
 
 /**
  * Implementacao da classe reta grafica.
+ * Estende a classe {@link Reta} para permitir a renderizacao visual de segmentos
+ * de reta na interface grafica, suportando cores, nome/rotulo textual,
+ * espessura e algoritmos de tracado (equacao da reta, MidPoint/Bresenham e biblioteca nativa).
  *
  * @author Ana Paula Barros de Jesus
  * @author Julie Quaglio da Silva
  * @author Vitor Seiji Colombo Nishida
  */
 public class RetaGr extends Reta{
-    // Atributos da reta grafica
-    Color corReta = Color.BLACK;   // cor da reta
-    String nomeReta = ""; // nome da reta
+    /**
+     * Cor utilizada para desenhar a reta na tela.
+     */
+    Color corReta = Color.BLACK;
+
+    /**
+     * Nome ou rotulo textual associado a reta.
+     */
+    String nomeReta = "";
+
+    /**
+     * Cor utilizada para desenhar o texto do nome da reta.
+     */
     Color corNomeReta  = Color.BLACK;
-    int espReta = 1; // espessura da reta
+
+    /**
+     * Espessura da reta em pixels (diametro dos pontos desenhados). Padrao e 1.
+     */
+    int espReta = 1;
+
+    /**
+     * Tipo ou algoritmo de tracado associado a reta grafica.
+     */
     String TipoReta;
 
-    // Construtores
     /**
-     * RetaGr - Constroi uma reta grafica
+     * Constroi uma reta grafica com coordenadas inteiras, cor, nome e espessura.
      *
-     * @param x1 int. Coordenada x1
-     * @param y1 int. Coordenada y1
-     * @param x2 int. Coordenada x2
-     * @param y2 int. Coordenada y2
-     * @param cor Color. Cor da reta
-     * @param nome String. Nome da reta
-     * @param esp int. Espessura da reta
+     * @param x1 Coordenada horizontal (eixo X) do ponto inicial
+     * @param y1 Coordenada vertical (eixo Y) do ponto inicial
+     * @param x2 Coordenada horizontal (eixo X) do ponto final
+     * @param y2 Coordenada vertical (eixo Y) do ponto final
+     * @param cor Cor da reta
+     * @param nome Nome ou rotulo da reta
+     * @param esp Espessura da reta em pixels
      */
     public RetaGr(int x1, int y1, int x2, int y2, Color cor, String nome, int esp){
         super (x1, y1, x2, y2);
@@ -39,13 +59,13 @@ public class RetaGr extends Reta{
     }    
 
     /**
-     * RetaGr - Constroi uma reta grafica
+     * Constroi uma reta grafica com coordenadas inteiras e cor especificada.
      *
-     * @param x1 int. Coordenada x1
-     * @param y1 int. Coordenada y1
-     * @param x2 int. Coordenada x2
-     * @param y2 int. Coordenada y2
-     * @param cor Color. Cor da reta
+     * @param x1 Coordenada horizontal (eixo X) do ponto inicial
+     * @param y1 Coordenada vertical (eixo Y) do ponto inicial
+     * @param x2 Coordenada horizontal (eixo X) do ponto final
+     * @param y2 Coordenada vertical (eixo Y) do ponto final
+     * @param cor Cor da reta
      */
     public RetaGr(int x1, int y1, int x2, int y2, Color cor){
         super (x1, y1, x2, y2);
@@ -54,14 +74,14 @@ public class RetaGr extends Reta{
     }   
 
     /**
-     * RetaGr - Constroi uma reta grafica
+     * Constroi uma reta grafica com coordenadas inteiras, cor e espessura especificadas.
      *
-     * @param x1 int. Coordenada x1
-     * @param y1 int. Coordenada y1
-     * @param x2 int. Coordenada x2
-     * @param y2 int. Coordenada y2
-     * @param cor Color. Cor da reta
-     * @param esp int. Espessura da reta
+     * @param x1 Coordenada horizontal (eixo X) do ponto inicial
+     * @param y1 Coordenada vertical (eixo Y) do ponto inicial
+     * @param x2 Coordenada horizontal (eixo X) do ponto final
+     * @param y2 Coordenada vertical (eixo Y) do ponto final
+     * @param cor Cor da reta
+     * @param esp Espessura da reta em pixels
      */
     public RetaGr(int x1, int y1, int x2, int y2, Color cor, int esp){
         super (x1, y1, x2, y2);
@@ -71,12 +91,12 @@ public class RetaGr extends Reta{
     }   
 
     /**
-     * RetaGr - Constroi uma reta grafica
+     * Constroi uma reta grafica padrao com coordenadas inteiras, cor preta e sem rotulo.
      *
-     * @param x1 int. Coordenada x1
-     * @param y1 int. Coordenada y1
-     * @param x2 int. Coordenada x2
-     * @param y2 int. Coordenada y2
+     * @param x1 Coordenada horizontal (eixo X) do ponto inicial
+     * @param y1 Coordenada vertical (eixo Y) do ponto inicial
+     * @param x2 Coordenada horizontal (eixo X) do ponto final
+     * @param y2 Coordenada vertical (eixo Y) do ponto final
      */
     public RetaGr(int x1, int y1, int x2, int y2){
         super (x1, y1, x2, y2);
@@ -85,10 +105,10 @@ public class RetaGr extends Reta{
     }   
 
     /**
-     * RetaGr - Constroi uma reta grafica
+     * Constroi uma reta grafica a partir de dois pontos graficos, com cor preta e sem rotulo.
      *
-     * @param p1 PontoGr. Ponto grafico p1 (x1, y1)
-     * @param p2 PontoGr. Ponto grafico p2 (x2, y2)
+     * @param p1 Ponto grafico inicial (p1)
+     * @param p2 Ponto grafico final (p2)
      */
     public RetaGr(PontoGr p1, PontoGr p2){
         super(p1, p2);
@@ -97,11 +117,11 @@ public class RetaGr extends Reta{
     }    
 
     /**
-     * RetaGr - Constroi uma reta grafica
+     * Constroi uma reta grafica a partir de dois pontos graficos e cor especificada.
      *
-     * @param p1 PontoGr. Ponto grafico p1 (x1, y1)
-     * @param p2 PontoGr. Ponto grafico p2 (x2, y2)
-     * @param cor Color. Cor da reta
+     * @param p1 Ponto grafico inicial (p1)
+     * @param p2 Ponto grafico final (p2)
+     * @param cor Cor da reta
      */
     public RetaGr(PontoGr p1, PontoGr p2, Color cor){
         super(p1, p2);
@@ -110,12 +130,12 @@ public class RetaGr extends Reta{
     }    
 
     /**
-     * RetaGr - Constroi uma reta grafica
+     * Constroi uma reta grafica a partir de dois pontos graficos, cor e nome especificados.
      *
-     * @param p1 PontoGr. Ponto grafico p1 (x1, y1)
-     * @param p2 PontoGr. Ponto grafico p2 (x2, y2)
-     * @param cor Color. Cor da reta
-     * @param nome String. Nome da reta
+     * @param p1 Ponto grafico inicial (p1)
+     * @param p2 Ponto grafico final (p2)
+     * @param cor Cor da reta
+     * @param str Nome ou rotulo da reta
      */
     public RetaGr(PontoGr p1, PontoGr p2, Color cor, String str){
         super(p1, p2);
@@ -126,41 +146,52 @@ public class RetaGr extends Reta{
     /**
      * Altera a cor da reta.
      *
-     * @param cor Color. Cor da reta.
+     * @param cor Nova cor da reta
      */
     public void setCorReta(Color cor) {
         this.corReta = cor;
     }
     
+    /**
+     * Define o tipo ou algoritmo de desenho associado a reta grafica.
+     *
+     * @param tipo Identificador do tipo ou algoritmo de desenho
+     */
     public void setTipoRetaGr(String tipo) {
         this.TipoReta = tipo;
     }
     
+    /**
+     * Retorna o tipo ou algoritmo de desenho associado a reta grafica.
+     *
+     * @return O tipo ou algoritmo de desenho da reta
+     */
     public String getTipoRetaGr(){
         return this.TipoReta;
     }
+
     /**
-     * Altera o nome da reta.
+     * Altera o nome ou rotulo da reta.
      *
-     * @param str String. Nome da reta.
+     * @param str Novo nome da reta
      */
     public void setNomeReta(String str) {
         this.nomeReta = str;
     }
 
     /**
-     * Altera a espessura da reta.
+     * Altera a espessura da reta em pixels.
      *
-     * @param esp int. Espessura da reta.
+     * @param esp Nova espessura da reta
      */
     public void setEspReta(int esp) {
         this.espReta = esp;
     }
 
     /**
-     * Retorna a espessura da reta.
+     * Retorna a espessura da reta em pixels.
      *
-     * @return int. Espessura da reta.
+     * @return Espessura da reta
      */
     public int getEspReta() {
         return(this.espReta);
@@ -169,39 +200,45 @@ public class RetaGr extends Reta{
     /**
      * Retorna a cor da reta.
      *
-     * @return Color. Cor da reta.
+     * @return Cor da reta
      */
     public Color getCorReta() {
         return corReta;
     }
 
     /**
-     * Retorna o nome da reta.
+     * Retorna o nome ou rotulo da reta.
      *
-     * @return String. Nome da reta.
+     * @return Nome da reta
      */
     public String getNomeReta() {
         return nomeReta;
     }
 
     /**
-     * @return the corNomeReta
+     * Retorna a cor utilizada para desenhar o texto do nome da reta.
+     *
+     * @return Cor do nome da reta
      */
     public Color getCorNomeReta() {
         return corNomeReta;
     }
 
     /**
-     * @param corNomeReta the corNomeReta to set
+     * Define a cor utilizada para desenhar o texto do nome da reta.
+     *
+     * @param corNomeReta Nova cor do nome da reta
      */
     public void setCorNomeReta(Color corNomeReta) {
         this.corNomeReta = corNomeReta;
     }
 
     /**
-     * Desenha reta grafica utilizando a equacao da reta: y = mx + b
+     * Desenha a reta grafica utilizando a equacao reduzida da reta: y = mx + b.
+     * Trata retas verticais e nao-verticais, tracando os pontos graficos intermediarios
+     * com a cor e espessura configuradas, alem de renderizar o rotulo textual da reta.
      *
-     * @param g Graphics. Classe com os metodos graficos do Java
+     * @param g Contexto grafico utilizado para desenhar
      */
     public void desenharReta(Graphics g){
 
@@ -265,8 +302,11 @@ public class RetaGr extends Reta{
     }
 
     /**
-     * Desenha reta utilizando o algoritmo de MidPoint (Bresenham)
-     * @param g
+     * Desenha a reta grafica utilizando o algoritmo de MidPoint (Bresenham).
+     * Renderiza o segmento de reta ponto a ponto com base em calculos de erro inteiros
+     * para qualquer inclinacao e direcao, alem de exibir o rotulo da reta.
+     *
+     * @param g Contexto grafico utilizado para desenhar
      */
     public void desenharRetaMp(Graphics g){
 
@@ -342,6 +382,11 @@ public class RetaGr extends Reta{
         }
     }
     
+    /**
+     * Desenha a reta grafica utilizando o metodo nativo da biblioteca Java (drawLine).
+     *
+     * @param g Contexto grafico utilizado para desenhar
+     */
     public void desenharRetaLib(Graphics g){
         int x1 = (int)getP1().getX(), x2 = (int)getP2().getX();
         int y1 = (int)getP1().getY(), y2 = (int)getP2().getY();

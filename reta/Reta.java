@@ -1,17 +1,34 @@
 package reta;
 import ponto.*;
+/**
+ * Representacao matematica de um segmento de reta no espaco bidimensional (2D).
+ * Definida por dois pontos extremos (ponto inicial p1 e ponto final p2).
+ * Fornece metodos para calculo dos coeficientes angular (m) e linear (b)
+ * da equacao reduzida da reta (y = mx + b).
+ *
+ * @author Ana Paula Barros de Jesus
+ * @author Julie Quaglio da Silva
+ * @author Vitor Seiji Colombo Nishida
+ */
 public class Reta {
  
-    // Atributos da reta
-    public Ponto p1, p2;
+    /**
+     * Ponto inicial do segmento de reta.
+     */
+    public Ponto p1;
 
     /**
-     * Constroi uma reta com valores (int) de x1, y1 e x2, y2
+     * Ponto final do segmento de reta.
+     */
+    public Ponto p2;
+
+    /**
+     * Constroi uma reta a partir de coordenadas inteiras para os pontos p1 e p2.
      *
-     * @param x1 coordenada x de p1
-     * @param y1 coordenada y de p1
-     * @param x2 coordenada x de p2
-     * @param y2 coordenada y de p2
+     * @param x1 Coordenada x do ponto inicial (p1)
+     * @param y1 Coordenada y do ponto inicial (p1)
+     * @param x2 Coordenada x do ponto final (p2)
+     * @param y2 Coordenada y do ponto final (p2)
      */
     public Reta(int x1, int y1, int x2, int y2) {
         setP1(new Ponto(x1, y1));
@@ -19,12 +36,12 @@ public class Reta {
     }
     
     /**
-     * Constroi uma reta com valores (double) de x1, y1 e x2, y2
+     * Constroi uma reta a partir de coordenadas reais (double) para os pontos p1 e p2.
      *
-     * @param x1 coordenada x de p1
-     * @param y1 coordenada y de p1
-     * @param x2 coordenada x de p2
-     * @param y2 coordenada y de p2
+     * @param x1 Coordenada x do ponto inicial (p1)
+     * @param y1 Coordenada y do ponto inicial (p1)
+     * @param x2 Coordenada x do ponto final (p2)
+     * @param y2 Coordenada y do ponto final (p2)
      */
     public Reta(double x1, double y1, double x2, double y2) {
         setP1(new Ponto(x1, y1));
@@ -32,10 +49,10 @@ public class Reta {
     }
     
     /**
-     * Controi uma reta com valores de p1 e p2 (externos)
+     * Constroi uma reta a partir de dois pontos externos ja existentes.
      *
-     * @param p1 Um parÃ¢metro
-     * @param p2 Um parÃ¢metro
+     * @param p1 Ponto inicial da reta
+     * @param p2 Ponto final da reta
      */
     public Reta(Ponto p1, Ponto p2) {
         setP1(p1);
@@ -43,9 +60,9 @@ public class Reta {
     }
     
     /**
-     * Constroi uma reta com dados de outra (externa)
+     * Constroi uma reta a partir de outra reta existente (construtor de copia).
      *
-     * @param r reta externa
+     * @param r Reta a ser copiada
      */
     public Reta (Reta r){
         setP1(r.getP1());
@@ -53,67 +70,72 @@ public class Reta {
     }
     
     /**
-     * Altera valor de p1 de acordo com o parametro
+     * Altera o ponto inicial (p1) da reta.
      *
-     * @param p valor de p1 (externo)
+     * @param p Novo ponto inicial (p1)
      */
     public void setP1(Ponto p){
         this.p1 = p;
     }
     
     /**
-     * Altera valor de p2 de acordo com o parametro
+     * Altera o ponto final (p2) da reta.
      *
-     * @param p valor de p2 (externo)
+     * @param p Novo ponto final (p2)
      */
     public void setP2(Ponto p){
         this.p2 = p;
     }
     
     /**
-     * Retorna valor de p1
+     * Retorna o ponto inicial (p1) da reta.
      *
-     * @return valor de p1
+     * @return Ponto inicial (p1)
      */
     public Ponto getP1(){
         return this.p1;
     }
     
     /**
-     * Retorna p2
+     * Retorna o ponto final (p2) da reta.
      *
-     * @return valor de p2
+     * @return Ponto final (p2)
      */
     public Ponto getP2(){
         return this.p2;
     }
+
     /**
-     * Calcula o valor de m (da equacao reduzida de reta: y = mx + b)
+     * Calcula o coeficiente angular (m) da equacao reduzida da reta (y = mx + b).
+     * Formula: m = (y2 - y1) / (x2 - x1).
      *
-     * @return valor de m
+     * @return O valor do coeficiente angular m
      */
     public double calcularM(){
         // m = (y2-y1)/(x2-x1)
         double m = (getP2().getY() - getP1().getY())/(getP2().getX() - getP1().getX());
         return m;
     }
-     /**
-      * Calcula o valor de b (y = mx + b)
-      *
-      * @return valor de b
-      */
-     public double calcularB(){
+
+    /**
+     * Calcula o coeficiente linear (b) da equacao reduzida da reta (y = mx + b).
+     * Formula: b = y1 - m * x1.
+     *
+     * @return O valor do coeficiente linear b
+     */
+    public double calcularB(){
         //b = y1 - mx1
         double b = getP1().getY() - calcularM()*getP1().getX();
         return b;
     }
     
-    
     /**
-     * Imprime a equacao de reta no formato (y = mx + b)
+     * Retorna uma representacao textual da reta, exibindo as coordenadas de p1, p2
+     * e a sua equacao reduzida no formato y = mx + b.
      *
-     * @return string que representa a reta
+     * @return String representando a reta
      */
+    @Override
     public String toString(){
         String s = "P1: " + getP1().toString() + " P2: " + getP2().toString();
         s = s + "\nEq. da reta: y = " + calcularM() + "*x + " + calcularB();
