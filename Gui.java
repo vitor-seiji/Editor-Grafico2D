@@ -69,6 +69,11 @@ class Gui extends JFrame {
     private JButton jbTriangulo = new JButton("Triangulo");
     
     /**
+     * Botão para selecionar a ferramenta de espelhamento.
+     */
+    private JButton jbEspelhar = new JButton("Espelhar");
+    
+    /**
      * Botão que abre a caixa de diálogo para escolha da cor de desenho.
      */
     private JButton jbCor = new JButton("Cor");
@@ -82,6 +87,11 @@ class Gui extends JFrame {
      * Botão para executar a ação de apagar primitivos do tipo selecionado.
      */
     private JButton jbLimpar = new JButton("Limpar");
+    
+    /**
+     * Botão para executar a ação de apagar um primitivo individualmente por clique.
+     */
+    private JButton jbApagar1 = new JButton("Apagar 1");
 
     /**
      * Opções de categorias de primitivos para filtragem e remoção.
@@ -174,16 +184,20 @@ class Gui extends JFrame {
         jbCirculo.setToolTipText("Desenhar circulo (2 cliques: centro e borda)");
         jbRetangulo.setToolTipText("Desenhar retangulo (2 cliques: cantos opostos)");
         jbTriangulo.setToolTipText("Desenhar triangulo (3 cliques)");
+        jbEspelhar.setToolTipText("Espelhar primitivo (1º clique seleciona, 2º e 3º formam a reta)");
         jbCor.setToolTipText("Escolher cor de desenho");
         jbLimpar.setToolTipText("Apagar primitivos do tipo selecionado");
+        jbApagar1.setToolTipText("Apagar uma única forma ao clicar nela");
         
         jbPonto.setFocusPainted(false);
         jbReta.setFocusPainted(false);
         jbCirculo.setFocusPainted(false);
         jbRetangulo.setFocusPainted(false);
         jbTriangulo.setFocusPainted(false);
+        jbEspelhar.setFocusPainted(false);
         jbCor.setFocusPainted(false);
         jbLimpar.setFocusPainted(false);
+        jbApagar1.setFocusPainted(false);
 
         // Adicionando os componentes
         barraComandos.add(new JLabel(" Primitivos: "));
@@ -192,6 +206,8 @@ class Gui extends JFrame {
         barraComandos.add(jbCirculo);
         barraComandos.add(jbRetangulo);
         barraComandos.add(jbTriangulo);
+        barraComandos.addSeparator();
+        barraComandos.add(jbEspelhar);
         barraComandos.addSeparator();
         barraComandos.add(new JLabel(" Espessura: "));
         jsEspessura.setMaximumSize(new Dimension(60, 30));
@@ -208,6 +224,7 @@ class Gui extends JFrame {
         barraComandos.add(cbLimparTipo);
         barraComandos.addSeparator(new Dimension(4, 0));
         barraComandos.add(jbLimpar);
+        barraComandos.add(jbApagar1);
         
         add(barraComandos, BorderLayout.NORTH);                
         add(areaDesenho, BorderLayout.CENTER);                
@@ -219,8 +236,10 @@ class Gui extends JFrame {
         jbCirculo.addActionListener(eventos);
         jbRetangulo.addActionListener(eventos);
         jbTriangulo.addActionListener(eventos);
+        jbEspelhar.addActionListener(eventos);
         jbCor.addActionListener(eventos);
         jbLimpar.addActionListener(eventos);
+        jbApagar1.addActionListener(eventos);
         
         cbFiltro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -278,6 +297,9 @@ class Gui extends JFrame {
             else if (event.getSource() == jbTriangulo){
                 areaDesenho.setTipo(TiposPrimitivos.TRIANGULO);
             }
+            else if (event.getSource() == jbEspelhar){
+                areaDesenho.setTipo(TiposPrimitivos.ESPELHAMENTO);
+            }
             else if (event.getSource() == jbCor){
                 Color cor = JColorChooser.showDialog(Gui.this, "Escolha a cor", areaDesenho.getCorAtual());
                 if (cor != null) {
@@ -294,6 +316,9 @@ class Gui extends JFrame {
                 else{
                     areaDesenho.setFiltroNaoVisibilidade(limparTipo);
                 }
+            }
+            else if (event.getSource() == jbApagar1){
+                areaDesenho.setTipo(TiposPrimitivos.APAGAR_INDIVIDUAL);
             }
         }
     } 
@@ -468,8 +493,8 @@ class Gui extends JFrame {
                 sb.append("\t\t\t\t\t\"y\": ").append(df.format(c.getCentro().getY() / h)).append("\n");
                 sb.append("\t\t\t\t},\n");
                 sb.append("\t\t\t\t\"raio\": {\n");
-                sb.append("\t\t\t\t\t\"x\": ").append(df.format((c.getCentro().getX() + c.getRaio()) / w)).append(",\n");
-                sb.append("\t\t\t\t\t\"y\": ").append(df.format(c.getCentro().getY() / h)).append("\n");
+                sb.append("\t\t\t\t\t\"x\": ").append(df.format(c.getPontoRaio().getX() / w)).append(",\n");
+                sb.append("\t\t\t\t\t\"y\": ").append(df.format(c.getPontoRaio().getY() / h)).append("\n");
                 sb.append("\t\t\t\t},\n");
                 sb.append(formatarCor(c.getCorCirculo()));
                 sb.append("\t\t\t\t\"esp\": ").append(c.getEspReta()).append(",\n");
@@ -701,9 +726,9 @@ class Gui extends JFrame {
     /**
      * Extrai um valor numérico de ponto flutuante (double) de um campo JSON simples ("chave": valor).
      *
-     * @param bloco Trecho de texto JSON onde a chave está contida.
-     * @param chave Identificador do campo no formato JSON (ex.: "\"x\"").
-     * @return Valor em ponto flutuante convertido, ou 0.0 caso o campo não seja encontrado ou contenha valor inválido.
+     * @param bloco Trecho de texto JSON onde a chave está contida
+     * @param chave Identificador do campo no formato JSON 
+     * @return Valor em ponto flutuante convertido, ou 0.0 caso o campo não seja encontrado ou contenha valor inválido
      */
     private double extrairDouble(String bloco, String chave) {
         int idx = bloco.indexOf(chave);
@@ -726,9 +751,9 @@ class Gui extends JFrame {
     /**
      * Extrai um valor numérico inteiro (int) de um campo JSON simples ("chave": valor).
      *
-     * @param bloco Trecho de texto JSON onde a chave está contida.
-     * @param chave Identificador do campo no formato JSON (ex.: "\"esp\"").
-     * @return Valor inteiro correspondente, ou 0 caso o campo não seja encontrado ou contenha valor inválido.
+     * @param bloco Trecho de texto JSON onde a chave está contida
+     * @param chave Identificador do campo no formato JSON
+     * @return Valor inteiro correspondente, ou 0 caso o campo não seja encontrado ou contenha valor inválido
      */
     private int extrairInt(String bloco, String chave) {
         return (int) extrairDouble(bloco, chave);
@@ -736,10 +761,7 @@ class Gui extends JFrame {
     
     /**
      * Extrai as componentes RGB de um sub-bloco JSON de cor ("cor": { "r": ..., "b": ..., "g": ... })
-     * e retorna a instância de {@link Color} correspondente com valores ajustados no intervalo [0, 255].
-     *
-     * @param bloco Trecho de texto JSON que contém o sub-objeto "cor".
-     * @return Instância de {@link Color} com as cores configuradas, ou {@link Color#BLACK} caso o bloco seja vazio.
+     * e retorna a instância correspondente com valores ajustados no intervalo [0, 255].
      */
     private Color extrairCor(String bloco) {
         String blocoCor = extrairBlocoObjeto(bloco, "\"cor\"");

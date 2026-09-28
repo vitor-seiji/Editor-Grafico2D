@@ -87,12 +87,14 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     int espessuraAtual = 10;
 
     /**
+     * Forma geométrica selecionada para operações como espelhamento.
+     */
+    private Object formaSelecionada = null;
+
+    /**
      * Construtor da classe PainelDesenho.
      * Inicializa o painel com cor de fundo branca, associa o rótulo de mensagens,
      * define o primitivo inicial e registra os ouvintes de eventos do mouse.
-     * 
-     * @param msg Rótulo de texto ({@link JLabel}) para exibição de mensagens e coordenadas.
-     * @param tipo Tipo primitivo inicial selecionado.
      */
     public PainelDesenho(JLabel msg, TiposPrimitivos tipo) {
         this.tipo = tipo;
@@ -110,6 +112,8 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     public void setTipo(TiposPrimitivos tipo){
         this.tipo = tipo;
         this.estadoClique = 0; // reseta o estado de cliques ao trocar de tipo
+        this.formaSelecionada = null;
+        repaint();
     }
     
     /**
@@ -123,8 +127,6 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     
     /**
      * Obtém o tipo de primitivo geométrico atualmente ativo.
-     * 
-     * @return O tipo de primitivo atual ({@link TiposPrimitivos}).
      */
     public TiposPrimitivos getTipo(){
         return this.tipo;
@@ -132,8 +134,6 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
 
     /**
      * Define a cor atual utilizada para desenhar as novas figuras geométricas.
-     * 
-     * @param cor Nova cor a ser aplicada.
      */
     public void setCorAtual(Color cor) {
         this.corAtual = cor;
@@ -141,8 +141,6 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
 
     /**
      * Obtém a cor atualmente configurada para desenho.
-     * 
-     * @return A cor atual de desenho ({@link Color}).
      */
     public Color getCorAtual() {
         return this.corAtual;
@@ -150,8 +148,6 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
 
     /**
      * Define a espessura do traço ou diâmetro para os novos primitivos.
-     * 
-     * @param esp Valor inteiro representando a espessura em pixels.
      */
     public void setEspessuraAtual(int esp) {
         this.espessuraAtual = esp;
@@ -159,8 +155,6 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     
     /**
      * Define o filtro de visibilidade para o redesenho seletivo das figuras e atualiza a tela.
-     * 
-     * @param filtro Nome da categoria de primitivos a ser exibida.
      */
     public void setFiltroVisibilidade(String filtro) {
         this.filtroVisibilidade = filtro;
@@ -275,6 +269,9 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
         } else if (estadoClique == 1 && tipo == TiposPrimitivos.TRIANGULO) {
             RetaGr r = new RetaGr(x1, y1, tempX, tempY, corAtual, espessuraAtual);
             r.desenharRetaLib(g);
+        } else if (estadoClique == 2 && tipo == TiposPrimitivos.ESPELHAMENTO) {
+            RetaGr r = new RetaGr(x1, y1, tempX, tempY, Color.RED, 1);
+            r.desenharRetaLib(g);
         }
         
     }
@@ -284,7 +281,6 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
      * Controla os estados de clique para definir os vértices necessários de cada primitiva,
      * instanciando e adicionando a forma geométrica correspondente à lista.
      * 
-     * @param e Objeto {@link MouseEvent} com informações do evento do mouse.
      */
     @Override
     public void mousePressed(MouseEvent e) { 
@@ -340,6 +336,74 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
                 TrianguloGr tri = new TrianguloGr(x1, y1, x2, y2, x3, y3, corAtual, espessuraAtual);
                 formas.add(tri);
                 repaint();
+            }
+        }
+        else if(tipo == TiposPrimitivos.ESPELHAMENTO) {
+            if (estadoClique == 0) {
+                formaSelecionada = selecionarForma(e.getX(), e.getY());
+                if (formaSelecionada != null) {
+                    estadoClique = 1;
+                    msg.setText("Primitivo selecionado! Clique para o 1º ponto da reta de espelhamento.");
+                } else {
+                    msg.setText("Nenhum primitivo encontrado. Clique perto de uma forma.");
+                }
+            } else if (estadoClique == 1) {
+                x1 = (int)e.getX();
+                y1 = (int)e.getY();
+                estadoClique = 2;
+                msg.setText("Clique para o 2º ponto da reta de espelhamento.");
+            } else {
+                x2 = (int)e.getX();
+                y2 = (int)e.getY();
+                
+                // Realiza o espelhamento
+                if (formaSelecionada instanceof PontoGr) {
+                    PontoGr p = (PontoGr) formaSelecionada;
+                    Ponto ref = refletirPonto(p, x1, y1, x2, y2);
+                    PontoGr pNovo = new PontoGr((int)ref.getX(), (int)ref.getY(), p.getCorPto(), p.getNomePto(), p.getDiametro());
+                    formas.add(pNovo);
+                } else if (formaSelecionada instanceof RetaGr) {
+                    RetaGr r = (RetaGr) formaSelecionada;
+                    Ponto p1Ref = refletirPonto(r.getP1(), x1, y1, x2, y2);
+                    Ponto p2Ref = refletirPonto(r.getP2(), x1, y1, x2, y2);
+                    RetaGr rNova = new RetaGr((int)p1Ref.getX(), (int)p1Ref.getY(), (int)p2Ref.getX(), (int)p2Ref.getY(), r.getCorReta(), r.getNomeReta(), r.getEspReta());
+                    rNova.setTipoRetaGr(r.getTipoRetaGr());
+                    formas.add(rNova);
+                } else if (formaSelecionada instanceof CirculoGr) {
+                    CirculoGr c = (CirculoGr) formaSelecionada;
+                    Ponto cRef = refletirPonto(c.getCentro(), x1, y1, x2, y2);
+                    Ponto prRef = refletirPonto(c.getPontoRaio(), x1, y1, x2, y2);
+                    CirculoGr cNovo = new CirculoGr((int)cRef.getX(), (int)cRef.getY(), (int)prRef.getX(), (int)prRef.getY(), c.getCorCirculo(), "", c.getEspReta());
+                    formas.add(cNovo);
+                } else if (formaSelecionada instanceof RetanguloGr) {
+                    RetanguloGr ret = (RetanguloGr) formaSelecionada;
+                    Ponto p1Ref = refletirPonto(ret.getP1(), x1, y1, x2, y2);
+                    Ponto p2Ref = refletirPonto(ret.getP2(), x1, y1, x2, y2);
+                    RetanguloGr retNovo = new RetanguloGr((int)p1Ref.getX(), (int)p1Ref.getY(), (int)p2Ref.getX(), (int)p2Ref.getY(), ret.getCorRetangulo(), ret.getEspessura());
+                    formas.add(retNovo);
+                } else if (formaSelecionada instanceof TrianguloGr) {
+                    TrianguloGr t = (TrianguloGr) formaSelecionada;
+                    Ponto p1Ref = refletirPonto(t.getP1(), x1, y1, x2, y2);
+                    Ponto p2Ref = refletirPonto(t.getP2(), x1, y1, x2, y2);
+                    Ponto p3Ref = refletirPonto(t.getP3(), x1, y1, x2, y2);
+                    TrianguloGr tNovo = new TrianguloGr((int)p1Ref.getX(), (int)p1Ref.getY(), (int)p2Ref.getX(), (int)p2Ref.getY(), (int)p3Ref.getX(), (int)p3Ref.getY(), t.getCorTriangulo(), t.getEspessura());
+                    formas.add(tNovo);
+                }
+                
+                formaSelecionada = null;
+                estadoClique = 0;
+                repaint();
+                msg.setText("Espelhamento concluído.");
+            }
+        }
+        else if(tipo == TiposPrimitivos.APAGAR_INDIVIDUAL) {
+            Object apagar = selecionarForma(e.getX(), e.getY());
+            if (apagar != null) {
+                formas.remove(apagar);
+                repaint();
+                msg.setText("Forma apagada com sucesso.");
+            } else {
+                msg.setText("Nenhuma forma encontrada no local do clique.");
             }
         }
     }     
@@ -421,5 +485,97 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     public void addForma(Object forma) {
         formas.add(forma);
         this.filtroVisibilidade = "Todos";
+    }
+
+    /**
+     * Calcula a distância de um ponto a um segmento de reta.
+     * Utilizado para detecção de colisão e seleção de retas ou polígonos.
+     * 
+     * @param px Coordenada X do ponto a ser testado.
+     * @param py Coordenada Y do ponto a ser testado.
+     * @param x1 Coordenada X inicial do segmento de reta.
+     * @param y1 Coordenada Y inicial do segmento de reta.
+     * @param x2 Coordenada X final do segmento de reta.
+     * @param y2 Coordenada Y final do segmento de reta.
+     * @return A menor distância euclidiana entre o ponto e o segmento de reta.
+     */
+    private double distanciaPontoSegmento(double px, double py, double x1, double y1, double x2, double y2) {
+        double l2 = Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2);
+        if (l2 == 0) return Math.hypot(px - x1, py - y1);
+        double t = Math.max(0, Math.min(1, ((px - x1) * (x2 - x1) + (py - y1) * (y2 - y1)) / l2));
+        double projX = x1 + t * (x2 - x1);
+        double projY = y1 + t * (y2 - y1);
+        return Math.hypot(px - projX, py - projY);
+    }
+
+    /**
+     * Encontra a forma geométrica mais próxima da coordenada fornecida, 
+     * iterando por todas as figuras na Estrutura de Dados (ED).
+     * 
+     * @param x Coordenada X do clique do mouse.
+     * @param y Coordenada Y do clique do mouse.
+     * @return A forma geométrica (PontoGr, RetaGr, etc.) selecionada ou null se nenhuma for encontrada dentro da tolerância.
+     */
+    private Object selecionarForma(int x, int y) {
+        Object selecionada = null;
+        double menorDistancia = 15.0; // Tolerância de 15 pixels
+
+        for (Object f : formas) {
+            double dist = Double.MAX_VALUE;
+            if (f instanceof PontoGr) {
+                PontoGr p = (PontoGr) f;
+                dist = Math.hypot(x - p.getX(), y - p.getY());
+            } else if (f instanceof RetaGr) {
+                RetaGr r = (RetaGr) f;
+                dist = distanciaPontoSegmento(x, y, r.getP1().getX(), r.getP1().getY(), r.getP2().getX(), r.getP2().getY());
+            } else if (f instanceof CirculoGr) {
+                CirculoGr c = (CirculoGr) f;
+                dist = Math.abs(Math.hypot(x - c.getCentro().getX(), y - c.getCentro().getY()) - c.getRaio());
+            } else if (f instanceof RetanguloGr) {
+                RetanguloGr r = (RetanguloGr) f;
+                double d1 = distanciaPontoSegmento(x, y, r.getP1().getX(), r.getP1().getY(), r.getP2().getX(), r.getP1().getY());
+                double d2 = distanciaPontoSegmento(x, y, r.getP2().getX(), r.getP1().getY(), r.getP2().getX(), r.getP2().getY());
+                double d3 = distanciaPontoSegmento(x, y, r.getP2().getX(), r.getP2().getY(), r.getP1().getX(), r.getP2().getY());
+                double d4 = distanciaPontoSegmento(x, y, r.getP1().getX(), r.getP2().getY(), r.getP1().getX(), r.getP1().getY());
+                dist = Math.min(Math.min(d1, d2), Math.min(d3, d4));
+            } else if (f instanceof TrianguloGr) {
+                TrianguloGr t = (TrianguloGr) f;
+                double d1 = distanciaPontoSegmento(x, y, t.getP1().getX(), t.getP1().getY(), t.getP2().getX(), t.getP2().getY());
+                double d2 = distanciaPontoSegmento(x, y, t.getP2().getX(), t.getP2().getY(), t.getP3().getX(), t.getP3().getY());
+                double d3 = distanciaPontoSegmento(x, y, t.getP3().getX(), t.getP3().getY(), t.getP1().getX(), t.getP1().getY());
+                dist = Math.min(d1, Math.min(d2, d3));
+            }
+
+            if (dist < menorDistancia) {
+                menorDistancia = dist;
+                selecionada = f;
+            }
+        }
+        return selecionada;
+    }
+
+    /**
+     * Reflete matematicamente um ponto geométrico em relação a uma reta arbitrária delimitada por dois pontos.
+     * 
+     * @param p Ponto geométrico de origem que será refletido.
+     * @param rx1 Coordenada X do primeiro ponto da reta de espelhamento.
+     * @param ry1 Coordenada Y do primeiro ponto da reta de espelhamento.
+     * @param rx2 Coordenada X do segundo ponto da reta de espelhamento.
+     * @param ry2 Coordenada Y do segundo ponto da reta de espelhamento.
+     * @return Novo Ponto contendo as coordenadas após a operação de reflexão.
+     */
+    private Ponto refletirPonto(Ponto p, int rx1, int ry1, int rx2, int ry2) {
+        double dx = rx2 - rx1;
+        double dy = ry2 - ry1;
+        double b = dx * dx + dy * dy;
+        if (b == 0) return new Ponto(p.getX(), p.getY()); // Previne divisão por zero se a reta for um ponto
+        
+        double a = (p.getX() - rx1) * dx + (p.getY() - ry1) * dy;
+        double cx = rx1 + a * dx / b; // Ponto mais próximo na reta (projeção)
+        double cy = ry1 + a * dy / b;
+        
+        double refX = 2 * cx - p.getX();
+        double refY = 2 * cy - p.getY();
+        return new Ponto(refX, refY);
     }
 }

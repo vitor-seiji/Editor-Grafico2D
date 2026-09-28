@@ -1,5 +1,6 @@
 package circulo;
 import ponto.PontoGr;
+import ponto.Ponto;
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -24,6 +25,9 @@ public class CirculoGr extends Circulo
     /** Espessura do traço do círculo. */
     int espReta = 1;
     
+    /** Ponto original do segundo clique (define o raio). */
+    private Ponto pontoRaio;
+    
     /**
      * Construtor de CirculoGr a partir de dois pontos que definem o centro e a borda.
      * 
@@ -37,6 +41,7 @@ public class CirculoGr extends Circulo
      */
     public CirculoGr(int x1, int y1, int x2, int y2, Color cor, String nome, int esp){
         super (x1, y1, (int)Math.hypot(x2-x1, y2-y1));
+        this.pontoRaio = new Ponto(x2, y2);
         corCirculo = cor;
         nomeCirculo = nome;
         espReta = esp;
@@ -116,4 +121,11 @@ public class CirculoGr extends Circulo
      * @return Espessura do traço
      */
     public int getEspReta() { return espReta; }
+    
+    /**
+     * Retorna o ponto original do segundo clique (ponto na borda que define o raio).
+     * 
+     * @return Ponto com as coordenadas do segundo clique
+     */
+    public Ponto getPontoRaio() { return pontoRaio; }
 }

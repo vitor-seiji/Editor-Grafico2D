@@ -36,5 +36,15 @@ public enum TiposPrimitivos {
     /**
      * Indica a ausência de seleção de primitiva geométrica ou estado neutro.
      */
-    NENHUM
+    NENHUM,
+    
+    /**
+     * Operação de espelhamento de um primitivo selecionado em relação a uma reta.
+     */
+    ESPELHAMENTO,
+    
+    /**
+     * Operação para apagar um primitivo específico ao clicar nele.
+     */
+    APAGAR_INDIVIDUAL
 }

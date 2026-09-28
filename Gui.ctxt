@@ -1,5 +1,5 @@
 #BlueJ class context
-#Mon Sep 14 18:07:45 BRT 2026
+#Mon Sep 28 19:18:11 BRT 2026
 comment0.target=Gui
 comment0.text=\r\n Janela principal da interface gr\u00E1fica do Editor Gr\u00E1fico.\r\n <p>\r\n Configura o menu da aplica\u00E7\u00E3o (abrir, salvar e sair), a barra de ferramentas\r\n com sele\u00E7\u00E3o de primitivos geom\u00E9tricos (ponto, reta, c\u00EDrculo, ret\u00E2ngulo, tri\u00E2ngulo),\r\n controle de espessura, seletor de cores, op\u00E7\u00F5es de filtro de exibi\u00E7\u00E3o e limpeza\r\n seletiva de elementos. Tamb\u00E9m prov\u00EA rotinas completas de serializa\u00E7\u00E3o e desserializa\u00E7\u00E3o\r\n das figuras gr\u00E1ficas no formato JSON.\r\n </p>\r\n \r\n @author Ana Paula Barros de Jesus\r\n @author Julie Quaglio da Silva\r\n @author Vitor Seiji Colombo Nishida\r\n @version 1.0\r\n
 comment1.params=larg alt
@@ -24,13 +24,13 @@ comment15.target=int encontrarFechamento(java.lang.String, int, char, char)
 comment15.text=\r\n Encontra o \u00EDndice do caractere de fechamento correspondente ao caractere de abertura,\r\n levando em considera\u00E7\u00E3o n\u00EDveis aninhados.\r\n\r\n @param s String a ser analisada.\r\n @param posAbertura Posi\u00E7\u00E3o na string correspondente ao caractere de abertura inicial.\r\n @param abertura Caractere de abertura (ex.\: '{' ou '[').\r\n @param fechamento Caractere de fechamento correspondente (ex.\: '}' ou ']').\r\n @return \u00CDndice do caractere de fechamento correspondente, ou -1 caso n\u00E3o seja localizado.\r\n
 comment16.params=bloco chave
 comment16.target=double extrairDouble(java.lang.String, java.lang.String)
-comment16.text=\r\n Extrai um valor num\u00E9rico de ponto flutuante (double) de um campo JSON simples ("chave"\: valor).\r\n\r\n @param bloco Trecho de texto JSON onde a chave est\u00E1 contida.\r\n @param chave Identificador do campo no formato JSON (ex.\: "\\"x\\"").\r\n @return Valor em ponto flutuante convertido, ou 0.0 caso o campo n\u00E3o seja encontrado ou contenha valor inv\u00E1lido.\r\n
+comment16.text=\r\n Extrai um valor num\u00E9rico de ponto flutuante (double) de um campo JSON simples ("chave"\: valor).\r\n\r\n @param bloco Trecho de texto JSON onde a chave est\u00E1 contida\r\n @param chave Identificador do campo no formato JSON \r\n @return Valor em ponto flutuante convertido, ou 0.0 caso o campo n\u00E3o seja encontrado ou contenha valor inv\u00E1lido\r\n
 comment17.params=bloco chave
 comment17.target=int extrairInt(java.lang.String, java.lang.String)
-comment17.text=\r\n Extrai um valor num\u00E9rico inteiro (int) de um campo JSON simples ("chave"\: valor).\r\n\r\n @param bloco Trecho de texto JSON onde a chave est\u00E1 contida.\r\n @param chave Identificador do campo no formato JSON (ex.\: "\\"esp\\"").\r\n @return Valor inteiro correspondente, ou 0 caso o campo n\u00E3o seja encontrado ou contenha valor inv\u00E1lido.\r\n
+comment17.text=\r\n Extrai um valor num\u00E9rico inteiro (int) de um campo JSON simples ("chave"\: valor).\r\n\r\n @param bloco Trecho de texto JSON onde a chave est\u00E1 contida\r\n @param chave Identificador do campo no formato JSON\r\n @return Valor inteiro correspondente, ou 0 caso o campo n\u00E3o seja encontrado ou contenha valor inv\u00E1lido\r\n
 comment18.params=bloco
 comment18.target=java.awt.Color extrairCor(java.lang.String)
-comment18.text=\r\n Extrai as componentes RGB de um sub-bloco JSON de cor ("cor"\: { "r"\: ..., "b"\: ..., "g"\: ... })\r\n e retorna a inst\u00E2ncia de {@link Color} correspondente com valores ajustados no intervalo [0, 255].\r\n\r\n @param bloco Trecho de texto JSON que cont\u00E9m o sub-objeto "cor".\r\n @return Inst\u00E2ncia de {@link Color} com as cores configuradas, ou {@link Color\#BLACK} caso o bloco seja vazio.\r\n
+comment18.text=\r\n Extrai as componentes RGB de um sub-bloco JSON de cor ("cor"\: { "r"\: ..., "b"\: ..., "g"\: ... })\r\n e retorna a inst\u00E2ncia correspondente com valores ajustados no intervalo [0, 255].\r\n
 comment2.params=e
 comment2.target=void actionPerformed(java.awt.event.ActionEvent)
 comment3.params=e
