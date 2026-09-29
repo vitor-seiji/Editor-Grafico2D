@@ -18,17 +18,16 @@ import javax.swing.JLabel;
 
 /**
  * Painel de desenho responsável pela renderização e interação com primitivos gráficos.
- * <p>
- * Herda de {@link JPanel} e implementa as interfaces {@link MouseListener} e
- * {@link MouseMotionListener} para capturar eventos de mouse, possibilitando o
+ * 
+ * Herda dee implementa as interfaces e
+ * para capturar eventos de mouse, possibilitando o
  * desenho interativo de pontos, retas, círculos, retângulos e triângulos, além
- * do efeito elástico (rubber-banding) durante a criação das formas.
- * </p>
+ * do efeito elástico durante a criação das formas.
+ * 
  * 
  * @author Ana Paula Barros de Jesus 
  * @author Julie Quaglio da Silva
  * @author Vitor Seiji Colombo Nishida
- * @version 1.0
  */
 public class PainelDesenho extends JPanel implements MouseListener, MouseMotionListener {
     /**
@@ -92,9 +91,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     private Object formaSelecionada = null;
 
     /**
-     * Construtor da classe PainelDesenho.
-     * Inicializa o painel com cor de fundo branca, associa o rótulo de mensagens,
-     * define o primitivo inicial e registra os ouvintes de eventos do mouse.
+     * Construtor
      */
     public PainelDesenho(JLabel msg, TiposPrimitivos tipo) {
         this.tipo = tipo;
@@ -106,8 +103,6 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     
     /**
      * Altera o tipo de primitivo geométrico ativo para desenho e reinicia o estado de cliques.
-     * 
-     * @param tipo Novo tipo primitivo a ser desenhado.
      */
     public void setTipo(TiposPrimitivos tipo){
         this.tipo = tipo;
@@ -200,10 +195,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     /**
      * Sobrescreve a renderização do componente para desenhar as formas que atendem
      * ao filtro de visibilidade ativo e renderizar o elástico temporário durante a criação.
-     * 
-     * @param g Contexto gráfico utilizado para o desenho.
      */
-    @Override
     public void paintComponent(Graphics g) {   
         super.paintComponent(g); // Limpa o fundo
         
@@ -411,36 +403,36 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     /**
      * Trata o evento de liberação do botão do mouse.
      * 
-     * @param e Objeto {@link MouseEvent} com os dados do evento.
+     * @param e Objeto com os dados do evento.
      */
     public void mouseReleased(MouseEvent e) { }           
 
     /**
      * Trata o evento de clique completo (pressionar e soltar) do mouse.
      * 
-     * @param e Objeto {@link MouseEvent} com os dados do evento.
+     * @param e Objeto com os dados do evento.
      */
     public void mouseClicked(MouseEvent e) { }
 
     /**
      * Trata o evento em que o mouse entra na área visível do componente.
      * 
-     * @param e Objeto {@link MouseEvent} com os dados do evento.
+     * @param e Objeto com os dados do evento.
      */
     public void mouseEntered(MouseEvent e) { }
 
     /**
      * Trata o evento em que o mouse sai da área visível do componente.
      * 
-     * @param e Objeto {@link MouseEvent} com os dados do evento.
+     * @param e Objeto com os dados do evento.
      */
     public void mouseExited(MouseEvent e) { }
 
     /**
      * Trata o evento de arrastar o mouse com o botão pressionado.
-     * Redireciona para {@link #mouseMoved(MouseEvent)} para atualizar coordenadas e repintar.
+     * Redireciona para para atualizar coordenadas e repintar.
      * 
-     * @param e Objeto {@link MouseEvent} com a posição atual do mouse.
+     * @param e Objeto com a posição atual do mouse.
      */
     public void mouseDragged(MouseEvent e) { 
         mouseMoved(e);
@@ -456,7 +448,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
      * Exibe as coordenadas atuais no rótulo de mensagens e, se houver um desenho em andamento,
      * atualiza o traçado elástico e repinta a tela.
      * 
-     * @param e Objeto {@link MouseEvent} com as coordenadas atuais do cursor.
+     * @param e Objeto com as coordenadas atuais do cursor.
      */
     public void mouseMoved(MouseEvent e) {
         this.msg.setText("(" + e.getX() + ", " + e.getY() + ")");
@@ -520,7 +512,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
         Object selecionada = null;
         double menorDistancia = 15.0; // Tolerância de 15 pixels
 
-        for (Object f : formas) {
+        for (Object f : formas) {//Percorre toda a ED e verifica se está perto do clique
             double dist = Double.MAX_VALUE;
             if (f instanceof PontoGr) {
                 PontoGr p = (PontoGr) f;

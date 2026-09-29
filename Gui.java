@@ -14,13 +14,13 @@ import java.util.List;
 
 /**
  * Janela principal da interface gráfica do Editor Gráfico.
- * <p>
+ * 
  * Configura o menu da aplicação (abrir, salvar e sair), a barra de ferramentas
  * com seleção de primitivos geométricos (ponto, reta, círculo, retângulo, triângulo),
  * controle de espessura, seletor de cores, opções de filtro de exibição e limpeza
  * seletiva de elementos. Também provê rotinas completas de serialização e desserialização
  * das figuras gráficas no formato JSON.
- * </p>
+ * 
  * 
  * @author Ana Paula Barros de Jesus
  * @author Julie Quaglio da Silva
@@ -128,8 +128,6 @@ class Gui extends JFrame {
      * Configura dimensões, layout, barra de menu (Arquivo), barra de ferramentas com botões
      * de primitivos, seletores de cor, espessura e filtros, e associa os respectivos ouvintes de eventos.
      *
-     * @param larg Largura inicial da janela em pixels.
-     * @param alt Altura inicial da janela em pixels.
      */
     public Gui(int larg, int alt) {
         super("Editor Grafico");
@@ -165,7 +163,7 @@ class Gui extends JFrame {
         menuBar.add(menuArquivo);
         setJMenuBar(menuBar);
         
-        // --- Toolbar ---
+        //toolbar
         barraComandos.setFloatable(false);
         barraComandos.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(200, 200, 200)),
@@ -199,7 +197,7 @@ class Gui extends JFrame {
         jbLimpar.setFocusPainted(false);
         jbApagar1.setFocusPainted(false);
 
-        // Adicionando os componentes
+        //componentes da janela
         barraComandos.add(new JLabel(" Primitivos: "));
         barraComandos.add(jbPonto);
         barraComandos.add(jbReta);
@@ -260,7 +258,6 @@ class Gui extends JFrame {
 
     /**
      * Classe interna ouvinte responsável pelo tratamento de eventos de ação dos botões da interface.
-     * Implementa a interface {@link ActionListener}.
      */
     private class Eventos implements ActionListener{
         /**
@@ -268,7 +265,6 @@ class Gui extends JFrame {
          * alternando o tipo de primitivo a ser desenhado, exibindo opções de algoritmo para retas,
          * abrindo o seletor de cores ou disparando a limpeza da tela.
          * 
-         * @param event Objeto {@link ActionEvent} contendo os detalhes do evento de ação disparado.
          */
         public void actionPerformed(ActionEvent event) {    
             if(event.getSource() != jbReta){
@@ -349,10 +345,8 @@ class Gui extends JFrame {
     }
 
     /**
-     * Formata um objeto {@link Color} na representação de objeto JSON contendo seus canais RGB.
+     * Formata um objeto na representação de objeto JSON contendo seus canais RGB.
      *
-     * @param c Objeto {@link Color} a ser formatado. Se for nulo, utiliza {@link Color#BLACK}.
-     * @return Fragmento de texto em formato JSON representando a cor.
      */
     private String formatarCor(Color c) {
         if (c == null) c = Color.BLACK;
@@ -686,8 +680,7 @@ class Gui extends JFrame {
     /**
      * Extrai um sub-objeto {} identificado por uma chave dentro de um bloco JSON.
      *
-     * @param bloco Trecho de texto contendo o objeto JSON.
-     * @param chave Nome da chave do sub-objeto a ser recuperado (ex.: "\"p1\"").
+     * @param chave Nome da chave do sub-objeto a ser recuperado
      * @return Conteúdo textual do sub-objeto delimitado por {}, ou uma string vazia caso não seja encontrado.
      */
     private String extrairBlocoObjeto(String bloco, String chave) {
@@ -705,9 +698,9 @@ class Gui extends JFrame {
      * levando em consideração níveis aninhados.
      *
      * @param s String a ser analisada.
-     * @param posAbertura Posição na string correspondente ao caractere de abertura inicial.
-     * @param abertura Caractere de abertura (ex.: '{' ou '[').
-     * @param fechamento Caractere de fechamento correspondente (ex.: '}' ou ']').
+     * @param posAbertura Posição na string correspondente ao caractere de abertura inicial
+     * @param abertura Caractere de abertura
+     * @param fechamento Caractere de fechamento correspondente
      * @return Índice do caractere de fechamento correspondente, ou -1 caso não seja localizado.
      */
     private int encontrarFechamento(String s, int posAbertura, char abertura, char fechamento) {
@@ -760,7 +753,7 @@ class Gui extends JFrame {
     }
     
     /**
-     * Extrai as componentes RGB de um sub-bloco JSON de cor ("cor": { "r": ..., "b": ..., "g": ... })
+     * Extrai as componentes RGB de um sub-bloco JSON de cor
      * e retorna a instância correspondente com valores ajustados no intervalo [0, 255].
      */
     private Color extrairCor(String bloco) {
