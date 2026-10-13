@@ -165,9 +165,10 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
         if (filtro.equals("Todos")) {
             formas.clear();
         } else {
-            java.util.Iterator<Object> it = formas.iterator();
-            while (it.hasNext()) {
+            java.util.Iterator<Object> it = formas.iterator();//Instância um Iterator para percorrer a ED formas
+            while (it.hasNext()) { //Loop para percorrer a ED
                 Object f = it.next();
+                //Remove da ED com base no parâmetro filtro
                 if (filtro.equals("Pontos") && f instanceof PontoGr) {
                     it.remove();
                 } else if (filtro.equals("Retas") && f instanceof RetaGr) {
@@ -181,7 +182,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
                 }
             }
         }
-        repaint();
+        repaint();//Atualiza a tela
     }
     
     /**
@@ -276,6 +277,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
      */
     @Override
     public void mousePressed(MouseEvent e) { 
+        //Desenha os primitivos
         Graphics g = getGraphics();
         if(tipo == TiposPrimitivos.PONTO){
             xMouse = e.getX();
@@ -330,68 +332,82 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
                 repaint();
             }
         }
+        //Realiza o espelhamento de um primitivo
         else if(tipo == TiposPrimitivos.ESPELHAMENTO) {
             if (estadoClique == 0) {
-                formaSelecionada = selecionarForma(e.getX(), e.getY());
+                formaSelecionada = selecionarForma(e.getX(), e.getY());//Instância um objeto da forma selecionada para o espelhamento
                 if (formaSelecionada != null) {
                     estadoClique = 1;
                     msg.setText("Primitivo selecionado! Clique para o 1º ponto da reta de espelhamento.");
                 } else {
                     msg.setText("Nenhum primitivo encontrado. Clique perto de uma forma.");
                 }
-            } else if (estadoClique == 1) {
+            } else if (estadoClique == 1) {//Primeiro ponto da reta de espelhamento
                 x1 = (int)e.getX();
                 y1 = (int)e.getY();
                 estadoClique = 2;
                 msg.setText("Clique para o 2º ponto da reta de espelhamento.");
             } else {
+                //Segundo ponto da reta de espelhamento
                 x2 = (int)e.getX();
                 y2 = (int)e.getY();
                 
                 // Realiza o espelhamento
                 if (formaSelecionada instanceof PontoGr) {
+                    //Instância um tipo primitivo com os valores da forma a ser refletida
                     PontoGr p = (PontoGr) formaSelecionada;
+                    //Instância o ponto principal da forma selecionada com as coordenadas refletidas
                     Ponto ref = refletirPonto(p, x1, y1, x2, y2);
+                    //Instância uma nova forma com os pontos refletidos
                     PontoGr pNovo = new PontoGr((int)ref.getX(), (int)ref.getY(), p.getCorPto(), p.getNomePto(), p.getDiametro());
                     formas.add(pNovo);
                 } else if (formaSelecionada instanceof RetaGr) {
+                    //Instância um tipo primitivo com os valores da forma a ser refletida
                     RetaGr r = (RetaGr) formaSelecionada;
                     Ponto p1Ref = refletirPonto(r.getP1(), x1, y1, x2, y2);
                     Ponto p2Ref = refletirPonto(r.getP2(), x1, y1, x2, y2);
+                    //Nova forma com as coordenadas refletidas
                     RetaGr rNova = new RetaGr((int)p1Ref.getX(), (int)p1Ref.getY(), (int)p2Ref.getX(), (int)p2Ref.getY(), r.getCorReta(), r.getNomeReta(), r.getEspReta());
                     rNova.setTipoRetaGr(r.getTipoRetaGr());
                     formas.add(rNova);
                 } else if (formaSelecionada instanceof CirculoGr) {
+                    //Instância um tipo primitivo com os valores da forma a ser refletida
                     CirculoGr c = (CirculoGr) formaSelecionada;
                     Ponto cRef = refletirPonto(c.getCentro(), x1, y1, x2, y2);
                     Ponto prRef = refletirPonto(c.getPontoRaio(), x1, y1, x2, y2);
+                    //Nova forma com as coordenadas refletidas
                     CirculoGr cNovo = new CirculoGr((int)cRef.getX(), (int)cRef.getY(), (int)prRef.getX(), (int)prRef.getY(), c.getCorCirculo(), "", c.getEspReta());
                     formas.add(cNovo);
                 } else if (formaSelecionada instanceof RetanguloGr) {
+                    //Instância um tipo primitivo com os valores da forma a ser refletida
                     RetanguloGr ret = (RetanguloGr) formaSelecionada;
                     Ponto p1Ref = refletirPonto(ret.getP1(), x1, y1, x2, y2);
                     Ponto p2Ref = refletirPonto(ret.getP2(), x1, y1, x2, y2);
+                    //Nova forma com as coordenadas refletidas
                     RetanguloGr retNovo = new RetanguloGr((int)p1Ref.getX(), (int)p1Ref.getY(), (int)p2Ref.getX(), (int)p2Ref.getY(), ret.getCorRetangulo(), ret.getEspessura());
                     formas.add(retNovo);
                 } else if (formaSelecionada instanceof TrianguloGr) {
+                    //Instância um tipo primitivo com os valores da forma a ser refletida
                     TrianguloGr t = (TrianguloGr) formaSelecionada;
+                    //Coordenadas refletidas
                     Ponto p1Ref = refletirPonto(t.getP1(), x1, y1, x2, y2);
                     Ponto p2Ref = refletirPonto(t.getP2(), x1, y1, x2, y2);
                     Ponto p3Ref = refletirPonto(t.getP3(), x1, y1, x2, y2);
+                    //Nova forma com as coordenadas reletidas
                     TrianguloGr tNovo = new TrianguloGr((int)p1Ref.getX(), (int)p1Ref.getY(), (int)p2Ref.getX(), (int)p2Ref.getY(), (int)p3Ref.getX(), (int)p3Ref.getY(), t.getCorTriangulo(), t.getEspessura());
                     formas.add(tNovo);
                 }
                 
                 formaSelecionada = null;
                 estadoClique = 0;
-                repaint();
+                repaint();//Atualiza na tela
                 msg.setText("Espelhamento concluído.");
             }
         }
         else if(tipo == TiposPrimitivos.APAGAR_INDIVIDUAL) {
-            Object apagar = selecionarForma(e.getX(), e.getY());
+            Object apagar = selecionarForma(e.getX(), e.getY());//Seleciona a forma a ser apagada
             if (apagar != null) {
-                formas.remove(apagar);
+                formas.remove(apagar);//Remove da ED e atualiza a tela
                 repaint();
                 msg.setText("Forma apagada com sucesso.");
             } else {
@@ -515,10 +531,10 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
         for (Object f : formas) {//Percorre toda a ED e verifica se está perto do clique
             double dist = Double.MAX_VALUE;
             if (f instanceof PontoGr) {
-                PontoGr p = (PontoGr) f;
-                dist = Math.hypot(x - p.getX(), y - p.getY());
+                PontoGr p = (PontoGr) f; //Instância um objeto do mesmo tipo do objeto selecionado
+                dist = Math.hypot(x - p.getX(), y - p.getY());// Calcula a distância do ponto fornecido da forma  
             } else if (f instanceof RetaGr) {
-                RetaGr r = (RetaGr) f;
+                RetaGr r = (RetaGr) f; 
                 dist = distanciaPontoSegmento(x, y, r.getP1().getX(), r.getP1().getY(), r.getP2().getX(), r.getP2().getY());
             } else if (f instanceof CirculoGr) {
                 CirculoGr c = (CirculoGr) f;
@@ -538,7 +554,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
                 dist = Math.min(d1, Math.min(d2, d3));
             }
 
-            if (dist < menorDistancia) {
+            if (dist < menorDistancia) {//Se a distância for menor que a tolerada retorna a forma selecionada
                 menorDistancia = dist;
                 selecionada = f;
             }
